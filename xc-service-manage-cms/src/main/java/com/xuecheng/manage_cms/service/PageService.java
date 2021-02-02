@@ -245,7 +245,6 @@ public class PageService {
     public Map getModelByPageId(String pageId) {
         //取出页面的信息
         CmsPage cmsPage = this.findById(pageId);
-        log.info("获取页面");
         if (cmsPage == null) {
             //页面不存在 24006
             ExceptionCast.cast(CmsCode.CMS_PAGE_NOTEXISTS);
@@ -273,7 +272,6 @@ public class PageService {
     public String getTemplateByPageId(String pageId) {
         //取出页面的信息
         CmsPage cmsPage = this.findById(pageId);
-        log.info("获取页面");
         if (cmsPage == null) {
             //页面不存在
             ExceptionCast.cast(CmsCode.CMS_PAGE_NOTEXISTS);
@@ -285,17 +283,15 @@ public class PageService {
         }
         //查询模板信息
         Optional<CmsTemplate> optional = cmsTemplateRepository.findById(templateId);
-        log.info("获取页面模板");
         if (optional.isPresent()) {
             CmsTemplate cmsTemplate = optional.get();
             //获取模板文件id
             String templateFileId = cmsTemplate.getTemplateFileId();
             //从GridFS中取模板文件内容
-            log.info("文件id:"+templateFileId);
+            log.info("获取模板文件,文件id:"+templateFileId);
             //根据文件id查询文件
             GridFSFile gridFSFile =
                     gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(templateFileId)));
-            log.info("获取页面模板文件");
             //打开一个下载流对象
             GridFSDownloadStream gridFSDownloadStream = gridFSBucket.openDownloadStream(gridFSFile.getObjectId());
             //创建GridFsResource对象，获取流
@@ -321,21 +317,19 @@ public class PageService {
     public String getPageHtml(String pageId) {
 //获取页面模型数据
         Map model = this.getModelByPageId(pageId);
-        log.info("获取页面模型数据");
         if (Objects.isNull(model)) {
 //获取页面模型数据为空
             ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_DATAISNULL);
         }
         //获取页面模板
-        log.info("获取页面模板");
         String templateContent = getTemplateByPageId(pageId);
         if (StringUtils.isEmpty(templateContent)) {
 //页面模板为空
             ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_TEMPLATEISNULL);
         }
         //执行静态化
-        log.info("执行静态化");
         String html = generateHtml(templateContent, model);
+        log.info("获取模板页面执行静态化,生成字符串页面");
         if (StringUtils.isEmpty(html)) {
             ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_HTMLISNULL);
         }
@@ -425,6 +419,7 @@ public class PageService {
         CmsPage cmsPage = optional.get();
         //存储之前先删除
         String htmlFileId = cmsPage.getHtmlFileId();
+        log.info("删除CmsPage 原保存的静态页面");
         if(StringUtils.isNotEmpty(htmlFileId)){
             gridFsTemplate.delete(Query.query(Criteria.where("_id").is(htmlFileId)));
         }
@@ -434,6 +429,7 @@ public class PageService {
         //文件id
         String fileId = objectId.toString();
         //将文件id存储到cmspage中
+        log.info("保存页面静态化文件到mongodb数据库,并更新cmspage静态页面id");
         cmsPage.setHtmlFileId(fileId);
         cmsPageRepository.save(cmsPage);
         return cmsPage;

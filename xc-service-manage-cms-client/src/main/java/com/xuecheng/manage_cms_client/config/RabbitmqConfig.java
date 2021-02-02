@@ -9,10 +9,12 @@ import org.springframework.context.annotation.Configuration;
 /**
  *
  * @project_name: xc-service-manage-cms-client
-queue * @create_name: kikock
+ * @description: Rabbitmq 消息中间件配置  消息接收方 配置交换机exchanges和队列queue
+ * @create_name: kikock
  * @create_date: 2021/2/1 11:09
  *
  */
+
 @Configuration
 public class RabbitmqConfig {
 

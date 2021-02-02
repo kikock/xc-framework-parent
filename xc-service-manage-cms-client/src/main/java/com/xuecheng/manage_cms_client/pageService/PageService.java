@@ -53,7 +53,6 @@ public class PageService {
 
     //保存html页面到服务器物理路径
     public void savePageToServerPath(String pageId){
-        log.info("保存html页面到服务器物理路径");
         //根据pageId查询cmsPage
         CmsPage cmsPage = this.findCmsPageById(pageId);
         //得到html的文件id，从cmsPage中获取htmlFileId内容
@@ -65,6 +64,7 @@ public class PageService {
             log.error("getFileById InputStream is null ,htmlFileId:{}",htmlFileId);
             return ;
         }
+        log.info("获取站点,页面文件,下载文件保存到站点指定路径");
         //得到站点id
         String siteId = cmsPage.getSiteId();
         //得到站点的信息
@@ -78,6 +78,7 @@ public class PageService {
         try {
             fileOutputStream = new FileOutputStream(new File(pagePath));
             IOUtils.copy(inputStream,fileOutputStream);
+            log.info("保存html页面到服务器物理路径成功!!");
         } catch (Exception e) {
             e.printStackTrace();
         }finally {

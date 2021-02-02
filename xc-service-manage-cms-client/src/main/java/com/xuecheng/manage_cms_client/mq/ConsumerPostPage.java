@@ -34,7 +34,7 @@ public class ConsumerPostPage{
     // 监听队列
     @RabbitListener(queues = ("${xuecheng.mq.queue}"))
     public  void postPage(String msg){
-        log.info("解析消息开始");
+        log.info("解析Rabbitmq发送的消息,进行页面发布");
         // 解析消息转换成map
         Map map = JsonUtils.fromJson(msg, Map.class);
         // 获取消息页面id
