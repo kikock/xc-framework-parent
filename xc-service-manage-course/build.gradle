@@ -1,0 +1,24 @@
+//脚本引用模块
+plugins {
+    id "java"
+    id "maven-publish"
+}
+
+
+// 指定编码格式 java编译的时候缺省状态下会因为中文字符而失败
+[compileJava, compileTestJava, javadoc]*.options*.encoding = "UTF-8"
+
+//项目引用依赖
+
+dependencies {
+    /* 子模块之间的依赖 */
+//    implementation project(path:  ':xc-service-api') //接口工程
+//    implementation project(path:  ':xc-framework-model') //模型工程
+//    implementation project(path:  ':xc-framework-utils')  //工具类工程
+//    implementation project(path:  ':xc-framework-common') //通用工程
+    /* springBoot 相关依赖 */
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-freemarker:${springBootVersion}"
+    /* http请求工具 */
+    implementation "com.squareup.okhttp3:okhttp:${okhttp}"
+}

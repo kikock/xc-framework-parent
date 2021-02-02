@@ -9,6 +9,7 @@
                 |---xc-service-Api                   接口工程，统一管理本项目的服务接口。
                 |---xc-service-cms                  CMS（Content Management System）即内容管理系统
                 |---xc-service-cms-client           内容管理系统客户端(接收消息发布前端页面)
+                |---xc-service-manage-course         课程管理模块
                 ├── build.gradle        -- 全局配置
                 ├── settings.gradle     -- 全局配置
                 ├── help.md             -- 说明文件      
