@@ -12,13 +12,18 @@ plugins {
 
 dependencies {
     /* 子模块之间的依赖 */
-//    implementation project(path:  ':xc-service-api') //接口工程
-//    implementation project(path:  ':xc-framework-model') //模型工程
-//    implementation project(path:  ':xc-framework-utils')  //工具类工程
-//    implementation project(path:  ':xc-framework-common') //通用工程
+    implementation project(path:  ':xc-service-api') //接口工程
+    implementation project(path:  ':xc-framework-model') //模型工程
+    implementation project(path:  ':xc-framework-utils')  //工具类工程
+    implementation project(path:  ':xc-framework-common') //通用工程
     /* springBoot 相关依赖 */
     implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
-    implementation "org.springframework.boot:spring-boot-starter-freemarker:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+    /* 其他依赖 */
+    implementation "mysql:mysql-connector-java:${mysqlVersion}"
+    implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.1"
+    implementation "com.alibaba:druid-spring-boot-starter:1.1.10"
+    implementation "org.springframework:spring-orm:${springVersion}"
     /* http请求工具 */
     implementation "com.squareup.okhttp3:okhttp:${okhttp}"
 }
