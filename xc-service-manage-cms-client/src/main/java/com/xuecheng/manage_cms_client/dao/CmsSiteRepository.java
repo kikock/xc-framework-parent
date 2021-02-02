@@ -14,6 +14,4 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  */
 public interface CmsSiteRepository extends MongoRepository<CmsSite,String> {
 
-    //根据页面名称查询
-    CmsSite findBySiteId(String siteId);
 }
