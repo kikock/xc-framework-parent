@@ -1,0 +1,8 @@
+rootProject.name = 'xc-framework-parent'
+include 'xc-framework-common'
+include 'xc-framework-model'
+include 'xc-framework-utils'
+include 'xc-service-api'
+include 'xc-service-manage-cms'
+include 'xc-service-manage-cms-client'
+

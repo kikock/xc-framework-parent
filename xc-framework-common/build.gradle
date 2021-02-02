@@ -1,0 +1,25 @@
+//脚本引用模块
+plugins {
+    id "java"
+    id "maven-publish"
+}
+
+
+// 指定编码格式 java编译的时候缺省状态下会因为中文字符而失败
+[compileJava, compileTestJava, javadoc]*.options*.encoding = "UTF-8"
+
+//项目引用依赖
+dependencies {
+    /* springBoot 相关依赖 */
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    /* feign依赖 */
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign:${springBootVersion}"
+    /* 接口,文档生成工具依赖 */
+    implementation "io.springfox:springfox-swagger2:${swagger2_version}"
+    /* google核心库依赖 */
+    implementation "com.google.guava:guava:${guava_version}"
+    /* Spring web端依赖 */
+    implementation "org.springframework:spring-web:${springWeb_version}"
+}
+
+

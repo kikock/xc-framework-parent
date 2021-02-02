@@ -1,0 +1,28 @@
+//脚本引用模块
+plugins {
+    id "java"
+    id "maven-publish"
+}
+
+
+// 指定编码格式 java编译的时候缺省状态下会因为中文字符而失败
+[compileJava, compileTestJava, javadoc]*.options*.encoding = "UTF-8"
+
+//项目引用依赖
+dependencies {
+    /* springBoot 相关依赖 */
+    implementation "org.springframework.boot:spring-boot-starter-logging:${springBootVersion}"
+    /* servlet相关依赖 */
+    implementation "javax.servlet:javax.servlet-api:${servlet_api}"
+    /* http客户端依赖 */
+    implementation "org.apache.httpcomponents:httpclient:${httpclient}"
+    /* zip4j打包工具依赖 */
+    implementation "net.lingala.zip4j:zip4j:${zip4j}"
+    /* security权限工具依赖 */
+    implementation "org.springframework.security:spring-security-crypto:${crypto_version}"
+    implementation "org.springframework.security:spring-security-jwt:${jwt_version}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
+
+}
+
+

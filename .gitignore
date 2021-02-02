@@ -1,0 +1,18 @@
+# 项目排除路径
+/.gradle/
+/.idea/
+/gradle/
+/logs/
+/xc-framework-common/build/
+/xc-framework-common/build/classes/java/main/
+/xc-framework-model/build/
+/xc-framework-model/build/classes/java/main/
+/xc-framework-utils/build/
+/xc-framework-utils/build/classes/java/main/
+/xc-service-api/build/
+/xc-service-api/build/classes/java/main/
+/xc-service-manage-cms/build/
+/xc-service-manage-cms/build/classes/java/main/
+/xc-service-manage-cms/build/classes/java/test/
+/xc-service-manage-cms-client/build/
+/xc-service-manage-cms-client/build/classes/java/main/
