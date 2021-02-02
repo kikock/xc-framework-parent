@@ -1,4 +1,4 @@
-package com.xuecheng.manage_cms;
+package com.xuecheng.manage_cms_client;
 
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSDownloadStream;
@@ -56,9 +56,7 @@ public class GridFsTest {
     // 文件读取
     @Test
     public void queryFile() throws IOException {
-        // String fileId = "6017bc2d3422d742307c53ec";
-        String fileId = "6018c02b3422d755e084fa79";
-
+        String fileId = "6017c7233422d704fc076c43";
         //根据文件id查询文件
         GridFSFile gridFSFile =
                 gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(fileId)));

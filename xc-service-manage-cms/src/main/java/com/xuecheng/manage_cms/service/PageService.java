@@ -365,6 +365,7 @@ public class PageService {
     //页面发布
     public ResponseResult postPage(String pageId){
         //执行页面静态化
+        log.info("###开始静态化页面####");
         String pageHtml = this.getPageHtml(pageId);
         if(StringUtils.isEmpty(pageHtml)){
             ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_HTMLISNULL);
