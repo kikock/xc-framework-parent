@@ -122,9 +122,9 @@ public class PageService {
     }
     //根据站点id查询站点信息
     private CmsSite findCmsSiteById(String siteId){
-        CmsSite cmsSite = cmsSiteRepository.findBySiteId(siteId);
-        if(Objects.nonNull(cmsSite)){
-            return cmsSite;
+        Optional<CmsSite> optional = cmsSiteRepository.findById(siteId);
+        if(optional.isPresent()){
+            return optional.get();
         }
         return null;
     }
