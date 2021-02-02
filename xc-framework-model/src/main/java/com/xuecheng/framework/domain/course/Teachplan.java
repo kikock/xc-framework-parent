@@ -14,6 +14,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "teachplan")
+//主键生成规则 uuid生成
 @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
 public class Teachplan implements Serializable {
     private static final long serialVersionUID = -916357110051689485L;
