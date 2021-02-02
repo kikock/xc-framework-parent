@@ -32,3 +32,4 @@
     管理地址: http://localhost:15672/   
     初始账号和密码：guest/guest
     
+ ps 跟着教程走了 后面慢慢完成
