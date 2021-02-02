@@ -1,4 +1,4 @@
- #黑马 学成在线
+ #黑马 学成在线 cms内容管理
 
   文件结构
   
@@ -8,6 +8,7 @@
                 |---xc-framework-utils               工具类工程，提供本项目所使用的工具类  
                 |---xc-service-Api                   接口工程，统一管理本项目的服务接口。
                 |---xc-service-cms                  CMS（Content Management System）即内容管理系统
+                |---xc-service-cms-client           内容管理系统客户端(接收消息发布前端页面)
                 ├── build.gradle        -- 全局配置
                 ├── settings.gradle     -- 全局配置
                 ├── help.md             -- 说明文件      
