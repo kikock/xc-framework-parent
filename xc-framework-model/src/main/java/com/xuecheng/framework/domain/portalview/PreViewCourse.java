@@ -3,7 +3,6 @@ package com.xuecheng.framework.domain.portalview;
 import com.xuecheng.framework.domain.course.CourseBase;
 import com.xuecheng.framework.domain.course.CourseMarket;
 import com.xuecheng.framework.domain.course.CoursePic;
-import com.xuecheng.framework.domain.course.ext.TeachplanNode;
 import com.xuecheng.framework.domain.report.ReportCourse;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,7 +20,6 @@ public class PreViewCourse implements Serializable {
     private CourseBase courseBase;
     private CourseMarket courseMarket;
     private CoursePic coursePic;
-    private TeachplanNode teachplan;
     //课程统计信息
     private ReportCourse reportCourse;
 
@@ -57,13 +55,6 @@ public class PreViewCourse implements Serializable {
         this.coursePic = coursePic;
     }
 
-    public TeachplanNode getTeachplan() {
-        return teachplan;
-    }
-
-    public void setTeachplan(TeachplanNode teachplan) {
-        this.teachplan = teachplan;
-    }
 
     public ReportCourse getReportCourse() {
         return reportCourse;
@@ -80,7 +71,6 @@ public class PreViewCourse implements Serializable {
                 ", courseBase=" + courseBase +
                 ", courseMarket=" + courseMarket +
                 ", coursePic=" + coursePic +
-                ", teachplan=" + teachplan +
                 ", reportCourse=" + reportCourse +
                 '}';
     }

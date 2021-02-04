@@ -2,7 +2,6 @@ package com.xuecheng.manage_course.service;
 
 import com.xuecheng.framework.domain.course.CourseBase;
 import com.xuecheng.framework.domain.course.Teachplan;
-import com.xuecheng.framework.domain.course.ext.TeachplanNode;
 import com.xuecheng.framework.exception.ExceptionCast;
 import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.framework.model.response.ResponseResult;
@@ -15,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -37,17 +39,63 @@ public class CourseService {
 
     @Autowired
     CourseBaseRepository courseBaseRepository;
-    //查询课程计划
-    public TeachplanNode findTeachplanList(String courseId){
-        return teachplanMapper.selectList(courseId);
+
+    /**
+     * @description: 查询课程计划树形结构
+     * @param: 课程id
+     * @return: 树形课程计划
+     * @create_name: kikock
+     * @create_date: 2021/2/4 9:44
+     **/
+    public List<Teachplan> findTeachplanList(String courseId) {
+        List<Teachplan> teachplanList = teachplanRepository.findByCourseid(courseId);
+        return teachplanFormatter(teachplanList);
     }
+
+    /**
+     * @description: 树形转换
+     * @param: 所有课程list
+     * @return: 转换后树形结构
+     * @create_name: kikock
+     * @create_date: 2021/2/4 9:59
+     **/
+    private List<Teachplan> teachplanFormatter(List<Teachplan> teachplanList) {
+        //返回数据
+        List<Teachplan> result = new ArrayList<>();
+        Map<String, Teachplan> cache = new HashMap<>();
+        //课程id 放进cache
+        for (Teachplan teachplan : teachplanList) {
+            //遍历所有的菜单放进map缓存 <id object>
+            cache.put(teachplan.getId(), teachplan);
+        }
+        for (Teachplan teachplan : teachplanList) {
+            //判断1级菜单
+            if ("0".equals(teachplan.getParentid())) {
+                //一级菜单
+                result.add(teachplan);
+            } else {
+                String pid = teachplan.getParentid();
+                Teachplan parent = cache.get(pid);
+                if (parent != null) {
+                    List<Teachplan> children = parent.getChildren();
+                    if (children == null) {
+                        children = new ArrayList<>();
+                        parent.setChildren(children);
+                    }
+                    children.add(teachplan);
+                }
+            }
+        }
+        return result;
+    }
+
 
     @Transactional
     public ResponseResult addTeachplan(Teachplan teachplan) {
 
-        if(teachplan == null ||
+        if (teachplan == null ||
                 StringUtils.isEmpty(teachplan.getPname()) ||
-                StringUtils.isEmpty(teachplan.getCourseid())){
+                StringUtils.isEmpty(teachplan.getCourseid())) {
             ExceptionCast.cast(CommonCode.INVALID_PARAM);
         }
         //课程id

@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by admin on 2018/2/7.
@@ -22,16 +24,28 @@ public class Teachplan implements Serializable {
     @GeneratedValue(generator = "jpa-uuid")
     @Column(length = 32)
     private String id;
+    // 课程名称
     private String pname;
+    //下级id
     private String parentid;
+    //层级
     private String grade;
     private String ptype;
+    //说明
     private String description;
     private String courseid;
+    //课程id
     private String status;
+
     private Integer orderby;
     private Double timelength;
     private String trylearn;
+    //父--自连接 多对一
+    @Transient
+    private Teachplan parent;
+    //子--自连接 一对多
+    @Transient
+    List<Teachplan> children;
 
     @Override
     public String toString() {
@@ -47,7 +61,25 @@ public class Teachplan implements Serializable {
                 ", orderby=" + orderby +
                 ", timelength=" + timelength +
                 ", trylearn='" + trylearn + '\'' +
+                ", parent=" + parent +
+                ", children=" + children +
                 '}';
+    }
+
+    public Teachplan getParent() {
+        return parent;
+    }
+
+    public void setParent(Teachplan parent) {
+        this.parent = parent;
+    }
+
+    public List<Teachplan> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Teachplan> children) {
+        this.children = children;
     }
 
     public static long getSerialVersionUID() {

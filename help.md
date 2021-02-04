@@ -22,7 +22,7 @@
 
 ## Swagger集成
     略
-    ps: swagger 地址 : http://localhost:31001/swagger-ui.html
+    ps: swagger 地址 : http://localhost:????/swagger-ui.html
     
 ## 其他信息
 @PathVariable("xxx") 注解
