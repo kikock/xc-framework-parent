@@ -1,6 +1,11 @@
 package com.xuecheng.framework.client;
 
-
+/**
+ * @project_name: xc-framework-common
+ * @description: 服务列表名称
+ * @create_name: kikock
+ * @create_date: 2021-02-02 16:06
+ **/
 public class XcServiceList {
     public static final String XC_GOVERN_CENTER = "xc-govern-center";
     public static final String XC_SERVICE_PORTALVIEW = "xc-service-portalview";

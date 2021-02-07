@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 /**
- * @project_name: xcEduService
+ * @project_name: xc-framework-common
  * @description: 捕获异常方法
  * @create_name: kikock
  * @create_date: 2021-01-13 16:31

@@ -1,8 +1,12 @@
 package com.xuecheng.framework.model.request;
 
+
 /**
- * Created by mrt on 2018/3/5.
- */
+ * @project_name: xc-framework-common
+ * @description: 请求数据
+ * @create_name: kikock
+ * @create_date: 2021-01-13 16:31
+ **/
 
 public class RequestData {
 

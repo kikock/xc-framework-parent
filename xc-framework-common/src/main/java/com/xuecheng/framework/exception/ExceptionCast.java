@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @project_name: xcEduService
+ * @project_name: xc-framework-common
  * @description: 异常抛出方法
  * @create_name: kikock
  * @create_date: 2021-01-13 16:30

@@ -1,13 +1,11 @@
 package com.xuecheng.framework.model.response;
 
 /**
- * @Author: mrt.
- * @Description:
- * @Date:Created in 2018/1/24 18:33.
- * @Modified By:
- */
-
-
+ * @project_name: xc-framework-common
+ * @description: 响应数据通用返回代码
+ * @create_name: kikock
+ * @create_date: 2021-01-13 16:31
+ **/
 public enum CommonCode implements ResultCode {
 
     SUCCESS(true, 10000, "操作成功！"),

@@ -7,8 +7,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Created by mrt on 2018/5/22.
- */
+ * @project_name: xc-framework-common
+ * @description: 通用控制器
+ * @create_name: kikock
+ * @create_date: 2021-01-13 16:31
+ **/
 public class BaseController {
     protected HttpServletRequest request;
 

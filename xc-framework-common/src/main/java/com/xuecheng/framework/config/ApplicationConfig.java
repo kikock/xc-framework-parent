@@ -7,7 +7,7 @@ import org.springframework.web.client.RestTemplate;
 
 
 /**
- * @project_name: xc-framework-parent
+ * @project_name: xc-framework-common
  * @description: 初始配置类
  * @create_name: kikock
  * @create_date: 2021-01-19 13:51

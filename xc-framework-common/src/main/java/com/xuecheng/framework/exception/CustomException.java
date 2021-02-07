@@ -2,8 +2,9 @@ package com.xuecheng.framework.exception;
 
 import com.xuecheng.framework.model.response.ResultCode;
 
+
 /**
- * @project_name: xcEduService
+ * @project_name: xc-framework-common
  * @description: 自定义异常(继承自定义异常)
  * @create_name: kikock
  * @create_date: 2021-01-13 16:28
