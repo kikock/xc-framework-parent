@@ -3,14 +3,22 @@ package com.xuecheng.framework.domain.cms;
 import java.util.Map;
 
 /**
- * Created by admin on 2018/2/6.
- */
+ * @project_name: xc-framework-model
+ * @description: 数据模板Ext扩展信息
+ * @create_name: kikock
+ * @create_date: 2021-01-13 16:31
+ **/
 public class CmsConfigModel {
-    private String key;//主键
-    private String name;//项目名称
-    private String url;//项目url
-    private Map mapValue;//项目复杂值
-    private String value;//项目简单值
+    //主键
+    private String key;
+    //项目名称
+    private String name;
+    //项目url
+    private String url;
+    //项目复杂值
+    private Map mapValue;
+    //项目简单值
+    private String value;
 
     @Override
     public String toString() {

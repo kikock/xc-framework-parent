@@ -1,11 +1,11 @@
-package com.xuecheng.framework.domain.cms;
+package com.xuecheng.framework.domain.cms.param;
 
 /**
- * @Author: mrt.
- * @Description:
- * @Date:Created in 2018/1/24 10:04.
- * @Modified By:
- */
+ * @project_name: xc-framework-model
+ * @description: cms页面查询参数实体
+ * @create_name: kikock
+ * @create_date: 2021-01-13 16:31
+ **/
 public class CmsPageParam {
     //参数名称
     private String pageParamName;

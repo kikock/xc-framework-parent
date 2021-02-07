@@ -4,9 +4,11 @@ import com.xuecheng.framework.model.response.ResponseResult;
 import com.xuecheng.framework.model.response.ResultCode;
 
 /**
- * Created by mrt on 2018/3/20.
- */
-
+ * @project_name: xc-framework-model
+ * @description: 添加课程响应
+ * @create_name: kikock
+ * @create_date: 2021-01-13 16:31
+ **/
 public class AddCourseResult extends ResponseResult {
     public AddCourseResult(ResultCode resultCode, String courseid) {
         super(resultCode);

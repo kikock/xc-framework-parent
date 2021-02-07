@@ -2,10 +2,13 @@ package com.xuecheng.framework.domain.cms.response;
 
 import com.xuecheng.framework.model.response.ResultCode;
 
-/**
- * Created by mrt on 2018/3/5.
- */
 
+/**
+ * @project_name: xc-framework-model
+ * @description: cms响应状态码
+ * @create_name: kikock
+ * @create_date: 2021-01-13 16:31
+ **/
 public enum CmsCode implements ResultCode {
     CMS_ADDPAGE_EXISTSNAME(false, 24001, "页面名称已存在！"),
     CMS_GENERATEHTML_DATAURLISNULL(false, 24002, "从页面信息中找不到获取数据的url！"),

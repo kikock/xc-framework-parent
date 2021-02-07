@@ -12,8 +12,11 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by admin on 2018/2/7.
- */
+ * @project_name: xc-framework-model
+ * @description: 课程计划实体
+ * @create_name: kikock
+ * @create_date: 2021-01-13 16:31
+ **/
 @Entity
 @Table(name = "teachplan")
 //主键生成规则 uuid生成

@@ -10,8 +10,11 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
- * Created by admin on 2018/2/7.
- */
+ * @project_name: xc-framework-model
+ * @description: 课程计划视频扩展参数
+ * @create_name: kikock
+ * @create_date: 2021-01-13 16:31
+ **/
 @Entity
 @Table(name = "teachplan_media")
 @GenericGenerator(name = "jpa-assigned", strategy = "assigned")

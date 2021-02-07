@@ -3,11 +3,11 @@ package com.xuecheng.framework.domain.cms.request;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * @author Administrator
- * @version 1.0
- * @create kikock
+ * @project_name: xc-framework-model
+ * @description: cms页面请求参数
+ * @create_name: kikock
+ * @create_date: 2021-01-13 16:31
  **/
-
 public class QueryPageRequest {
     //接收页面查询的查询条件
     //站点id

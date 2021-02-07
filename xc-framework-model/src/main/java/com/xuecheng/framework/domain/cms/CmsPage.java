@@ -1,5 +1,6 @@
 package com.xuecheng.framework.domain.cms;
 
+import com.xuecheng.framework.domain.cms.param.CmsPageParam;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -7,11 +8,11 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Author: mrt.
- * @Description:
- * @Date:Created in 2018/1/24 10:04.
- * @Modified By:
- */
+ * @project_name: xc-framework-model
+ * @description: cms页面信息实体
+ * @create_name: kikock
+ * @create_date: 2021-01-13 16:31
+ **/
 @Document(collection = "cms_page")
 public class CmsPage {
     /**

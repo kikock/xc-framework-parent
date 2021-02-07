@@ -5,10 +5,11 @@ import com.xuecheng.framework.model.response.ResponseResult;
 import com.xuecheng.framework.model.response.ResultCode;
 
 /**
- * 返回CmsPage数据
- * Created by mrt on 2018/3/31.
- */
-
+ * @project_name: xc-framework-model
+ * @description: cms页面响应信息
+ * @create_name: kikock
+ * @create_date: 2021-01-13 16:31
+ **/
 public class CmsPageResult extends ResponseResult {
     CmsPage cmsPage;
 

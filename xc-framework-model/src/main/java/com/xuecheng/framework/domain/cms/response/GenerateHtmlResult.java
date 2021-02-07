@@ -4,9 +4,11 @@ import com.xuecheng.framework.model.response.ResponseResult;
 import com.xuecheng.framework.model.response.ResultCode;
 
 /**
- * Created by mrt on 2018/3/31.
- */
-
+ * @project_name: xc-framework-model
+ * @description: 静态化html页面响应信息
+ * @create_name: kikock
+ * @create_date: 2021-01-13 16:31
+ **/
 public class GenerateHtmlResult extends ResponseResult {
     String html;
 

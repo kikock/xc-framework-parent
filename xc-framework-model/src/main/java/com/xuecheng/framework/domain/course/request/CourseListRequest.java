@@ -3,8 +3,11 @@ package com.xuecheng.framework.domain.course.request;
 import com.xuecheng.framework.model.request.RequestData;
 
 /**
- * Created by mrt on 2018/4/13.
- */
+ * @project_name: xc-framework-model
+ * @description: 课程请求参数
+ * @create_name: kikock
+ * @create_date: 2021-01-13 16:31
+ **/
 public class CourseListRequest extends RequestData {
     //公司Id
     private String companyId;

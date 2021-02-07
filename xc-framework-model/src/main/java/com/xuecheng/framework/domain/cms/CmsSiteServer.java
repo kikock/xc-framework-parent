@@ -4,12 +4,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * @Author: mrt.
- * @Description:
- * @Date:Created in 2018/1/24 10:00.
- * @Modified By:
+ * @project_name: xc-framework-model
+ * @description: 站点服务实体类
+ * @create_name: kikock
+ * @create_date: 2021/1/1 11:09
  */
-
 @Document(collection = "cms_site_server")
 public class CmsSiteServer {
     /**

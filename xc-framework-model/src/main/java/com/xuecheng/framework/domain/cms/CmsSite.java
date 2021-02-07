@@ -6,12 +6,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 
 /**
- *
- * @project_name: xc-service-manage-cms-client
+ * @project_name: xc-framework-model
  * @description: 站点实体类
  * @create_name: kikock
  * @create_date: 2021/1/1 11:09
- *
  */
 @Document(collection = "cms_site")
 public class CmsSite {

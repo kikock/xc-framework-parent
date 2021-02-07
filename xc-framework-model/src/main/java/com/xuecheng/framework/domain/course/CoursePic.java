@@ -9,9 +9,11 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
- * Created by admin on 2018/2/10.
- */
-
+ * @project_name: xc-framework-model
+ * @description:
+ * @create_name: kikock
+ * @create_date: 2021-01-13 16:31
+ **/
 @Entity
 @Table(name = "course_pic")
 @GenericGenerator(name = "jpa-assigned", strategy = "assigned")

@@ -4,9 +4,11 @@ import com.xuecheng.framework.model.response.ResponseResult;
 import com.xuecheng.framework.model.response.ResultCode;
 
 /**
- * Created by admin on 2018/3/5.
- */
-
+ * @project_name: xc-framework-model
+ * @description: 课程预览响应信息
+ * @create_name: kikock
+ * @create_date: 2021-01-13 16:31
+ **/
 public class CoursePreviewResult extends ResponseResult {
     public CoursePreviewResult(ResultCode resultCode, String url) {
         super(resultCode);
