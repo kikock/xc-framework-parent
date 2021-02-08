@@ -10,6 +10,12 @@ import java.util.List;
  * 1、查看视频时长
  * 2、校验两个视频的时长是否相等
  */
+/**
+ * @project_name: xc-framework-utils
+ * @description: 视频文件处理
+ * @create_name: kikock
+ * @create_date: 2021-01-21 16:23
+ */
 public class VideoUtil {
 
     String ffmpeg_path = "D:\\Program Files\\ffmpeg-20180227-fa0c9d6-win64-static\\bin\\ffmpeg.exe";//ffmpeg的安装位置

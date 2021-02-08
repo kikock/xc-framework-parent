@@ -4,7 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by mrt on 2018/3/27.
+ * @project_name: xc-framework-utils
+ * @description: 订单号生成工具
+ * @create_name: kikock
+ * @create_date: 2021/1/1 11:09
  */
 public class GenerateOrderNum {
     /**

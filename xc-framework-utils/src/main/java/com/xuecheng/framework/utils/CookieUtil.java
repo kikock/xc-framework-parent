@@ -7,7 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by admin on 2018/3/18.
+ * @project_name: xc-framework-utils
+ * @description: Cookie工具
+ * @create_name: kikock
+ * @create_date: 2021/1/1 11:09
  */
 public class CookieUtil {
 

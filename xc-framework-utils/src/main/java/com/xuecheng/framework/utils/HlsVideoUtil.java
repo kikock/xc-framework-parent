@@ -7,7 +7,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
+ * @project_name: xc-framework-utils
+ * @description: 视频文件处理工具
+ * @create_name: kikock
+ * @create_date: 2021/1/1 11:09
+ * <p>
  * 此文件用于视频文件处理，步骤如下：
  * 1、生成mp4
  * 2、生成m3u8

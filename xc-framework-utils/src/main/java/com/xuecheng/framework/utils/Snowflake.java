@@ -8,6 +8,11 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
+ * @project_name: xc-framework-utils
+ * @description: 开源的分布式ID生成算法
+ * @create_name: kikock
+ * @create_date: 2021-01-21 16:23
+ * <p>
  * java edition of Twitter <b>Snowflake</b>, a network service for generating
  * unique ID numbers at high scale with some simple guarantees.
  * <p>

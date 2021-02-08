@@ -3,7 +3,12 @@ package com.xuecheng.framework.utils;
 
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
-
+/**
+ * @project_name: xc-framework-utils
+ * @description: Zip打包解包工具
+ * @create_name: kikock
+ * @create_date: 2021-01-21 16:23
+ */
 public class ZipUtil {
 
     /**

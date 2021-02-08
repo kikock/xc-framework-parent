@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @project_name: xc-framework-parent
+ * @project_name: xc-framework-utils
  * @description: json工具类
  * @create_name: kikock
  * @create_date: 2021-01-21 16:23

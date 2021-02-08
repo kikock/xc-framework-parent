@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by admin on 2018/3/6.
- */
+ * @project_name: xc-framework-utils
+ * @description: Mp4Video工具类
+ * @create_name: kikock
+ * @create_date: 2021-01-21 16:23
+ **/
 public class Mp4VideoUtil extends VideoUtil {
 
     String ffmpeg_path = "D:\\Program Files\\ffmpeg-20180227-fa0c9d6-win64-static\\bin\\ffmpeg.exe";//ffmpeg的安装位置

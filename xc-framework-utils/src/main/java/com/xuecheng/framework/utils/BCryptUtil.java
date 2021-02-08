@@ -4,7 +4,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- * Created by mrt on 2018/5/22.
+ * @project_name: xc-framework-utils
+ * @description: 加密工具
+ * @create_name: kikock
+ * @create_date: 2021/1/1 11:09
  */
 public class BCryptUtil {
     public static String encode(String password) {

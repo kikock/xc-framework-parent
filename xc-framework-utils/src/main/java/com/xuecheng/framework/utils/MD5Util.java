@@ -8,8 +8,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Created by admin on 2018/3/5.
- */
+ * @project_name: xc-framework-utils
+ * @description: MD5Util工具类
+ * @create_name: kikock
+ * @create_date: 2021-01-21 16:23
+ **/
 public class MD5Util {
 
     /**

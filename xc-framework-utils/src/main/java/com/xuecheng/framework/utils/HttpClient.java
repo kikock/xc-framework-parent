@@ -30,10 +30,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+
 /**
- * http请求客户端
- *
- * @author Administrator
+ * @project_name: xc-framework-utils
+ * @description: http请求客户端
+ * @create_name: kikock
+ * @create_date: 2021/1/1 11:09
  */
 public class HttpClient {
     private String url;

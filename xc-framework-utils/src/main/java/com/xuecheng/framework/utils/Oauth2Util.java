@@ -9,8 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
- * Created by mrt on 2018/5/25.
- */
+ * @project_name: xc-framework-utils
+ * @description: Oauth2Util工具类
+ * @create_name: kikock
+ * @create_date: 2021-01-21 16:23
+ **/
 public class Oauth2Util {
 
     public static Map<String, String> getJwtClaimsFromHeader(HttpServletRequest request) {

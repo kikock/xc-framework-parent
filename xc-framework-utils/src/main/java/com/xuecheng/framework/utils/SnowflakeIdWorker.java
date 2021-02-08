@@ -1,7 +1,10 @@
 package com.xuecheng.framework.utils;
 
 /**
- * Created by mrt on 2018/3/27.
+ * @project_name: xc-framework-utils
+ * @description: 开源的分布式ID生成算法
+ * @create_name: kikock
+ * @create_date: 2021-01-21 16:23
  */
 
 /**
