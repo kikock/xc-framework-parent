@@ -13,6 +13,8 @@ public class QueryResult<T> {
     private List<T> list;
     //数据总数
     private long total;
+    //其他参数
+    private Object data = null;
 
     public List<T> getList() {
         return list;
@@ -30,11 +32,20 @@ public class QueryResult<T> {
         this.total = total;
     }
 
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+
     @Override
     public String toString() {
         return "QueryResult{" +
                 "list=" + list +
                 ", total=" + total +
+                ", data=" + data +
                 '}';
     }
 }

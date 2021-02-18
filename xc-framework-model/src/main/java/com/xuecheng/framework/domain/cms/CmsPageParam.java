@@ -1,4 +1,4 @@
-package com.xuecheng.framework.domain.cms.param;
+package com.xuecheng.framework.domain.cms;
 
 /**
  * @project_name: xc-framework-model

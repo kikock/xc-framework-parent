@@ -1,6 +1,5 @@
 package com.xuecheng.framework.domain.cms;
 
-import com.xuecheng.framework.domain.cms.param.CmsPageParam;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -48,7 +47,7 @@ public class CmsPage {
     //参数列表
     private List<CmsPageParam> pageParams;
     //模版文件Id
-//    private String templateFileId;
+    //    private String templateFileId;
     //静态文件Id
     private String htmlFileId;
     //数据Url

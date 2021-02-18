@@ -10,12 +10,12 @@ import com.xuecheng.framework.model.response.ResultCode;
  * @create_date: 2021-01-13 16:31
  **/
 public class CoursePreviewResult extends ResponseResult {
+    String url;
+
     public CoursePreviewResult(ResultCode resultCode, String url) {
         super(resultCode);
         this.url = url;
     }
-
-    String url;
 
     public CoursePreviewResult(ResultCode resultCode) {
         super(resultCode);

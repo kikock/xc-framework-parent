@@ -1,6 +1,7 @@
 package com.xuecheng.manage_cms.service;
 
 import com.xuecheng.framework.domain.cms.CmsConfig;
+import com.xuecheng.framework.domain.cms.CmsConfigModel;
 import com.xuecheng.framework.domain.cms.request.QueryCmsConfigRequest;
 import com.xuecheng.framework.domain.cms.response.CmsCode;
 import com.xuecheng.framework.domain.cms.response.CmsConfigResult;
@@ -8,28 +9,31 @@ import com.xuecheng.framework.exception.ExceptionCast;
 import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.framework.model.response.QueryResponseResult;
 import com.xuecheng.framework.model.response.QueryResult;
+import com.xuecheng.framework.model.response.ResponseResult;
+import com.xuecheng.framework.utils.JsonUtils;
 import com.xuecheng.manage_cms.dao.CmsConfigRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 /**
- *
  * @project_name: xc-framework-parent
  * @description: 页面模板服务层
  * @create_name: kikock
  * @create_date: 2021-01-19 17:31
- *
  **/
 @Service
 public class CmsConfigService {
@@ -37,32 +41,28 @@ public class CmsConfigService {
     private static final Logger log = LoggerFactory.getLogger(CmsConfigService.class);
 
 
-    @Autowired
+    @Resource
     CmsConfigRepository cmsConfigRepository;
-
 
 
     /**
      * 根据id查询cms配置管理信息
      *
      * @param id cmsConfig模板id
-     * @return  模板消息
+     * @return 模板消息
      */
     public CmsConfig getConfigById(String id) {
         Optional<CmsConfig> optional = cmsConfigRepository.findById(id);
-        if (optional.isPresent()) {
-            CmsConfig cmsConfig = optional.get();
-            return cmsConfig;
-        }
-        return null;
+        return optional.orElse(null);
     }
+
     /**
      * 页面查询方法
      *
-     * @param page             页码，从1开始记数
-     * @param size             每页记录数
+     * @param page                  页码，从1开始记数
+     * @param size                  每页记录数
      * @param queryCmsConfigRequest 查询条件
-     * @return
+     * @return QueryResponseResult
      */
     public QueryResponseResult findList(int page, int size, QueryCmsConfigRequest queryCmsConfigRequest) {
         if (Objects.isNull(queryCmsConfigRequest)) {
@@ -98,96 +98,135 @@ public class CmsConfigService {
         QueryResult queryResult = new QueryResult();
         queryResult.setList(all.getContent());//数据列表
         queryResult.setTotal(all.getTotalElements());//数据总记录数
-        QueryResponseResult queryResponseResult = new QueryResponseResult(CommonCode.SUCCESS, queryResult);
-        return queryResponseResult;
+        return new QueryResponseResult(CommonCode.SUCCESS, queryResult);
     }
 
     /**
-     * 页面添加
+     * 添加模板类型
      *
      * @param cmsConfig 模板参数
-     * @return
+     * @return CmsConfigResult
      */
     public CmsConfigResult add(CmsConfig cmsConfig) {
         CmsConfig cmsConfig1 = cmsConfigRepository.findByName(cmsConfig.getName());
         if (Objects.nonNull(cmsConfig1)) {
-            //已经存在此模板抛出异常
-            ExceptionCast.cast(CmsCode.CMS_ADDPAGE_EXISTSNAME);
+            //已经存在此模板抛出异常---模板名称已经存在
+            ExceptionCast.cast(CmsCode.CMS_ADDCONFIG_EXISTSNAME);
         }
-        cmsConfig.setId(null);
+        if (StringUtils.isBlank(cmsConfig.getId())) {
+            cmsConfig.setId(null);
+            cmsConfigRepository.save(cmsConfig);
+        }
+        Optional<CmsConfig> optional = cmsConfigRepository.findById(cmsConfig.getId());
+        if (optional.isPresent()) {
+            CmsConfig cmsConfig2 = optional.get();
+            cmsConfig.setModel(cmsConfig2.getModel());
+            cmsConfigRepository.save(cmsConfig);
+            return new CmsConfigResult(CommonCode.SUCCESS, cmsConfig);
+        }
+        return new CmsConfigResult(CommonCode.FAIL, null);
+    }
+
+    /**
+     * @description: 添加模板
+     * @param: id
+     * @param: configModel
+     * @return: CmsConfigResult
+     * @create_name: kikock
+     * @create_date: 2021/2/9 10:51
+     **/
+    public CmsConfigResult addModel(String id, CmsConfigModel configModel) {
+        String jsonInput = configModel.getValue();
+
+        if (StringUtils.isNoneBlank(jsonInput) && !JsonUtils.validate(jsonInput)) {
+            //不为空且json数据校验不成功 抛出异常
+            ExceptionCast.cast(CommonCode.JSONCHECK_ERROR);
+        }
+        //获取模板类型
+        Optional<CmsConfig> optional = cmsConfigRepository.findById(id);
+        if (!optional.isPresent()) {
+            //模板类型不存在 抛出异常
+            ExceptionCast.cast(CmsCode.CMS_ADDCONFIG_TEMPLATEISNULL);
+        }
+        // 获取模板类型中的模板
+        CmsConfig cmsConfig = optional.get();
+        List<CmsConfigModel> model = cmsConfig.getModel();
+        if (CollectionUtils.isEmpty(model)) {
+            model = new ArrayList<>();
+            model.add(configModel);
+            cmsConfig.setModel(model);
+        } else {
+            List<CmsConfigModel> newMorel = new ArrayList<>();
+            for (CmsConfigModel i : model) {
+                if (!i.getKey().equals(configModel.getKey())) {
+                    newMorel.add(i);
+                } else {
+                    newMorel.add(configModel);
+                }
+            }
+            cmsConfig.setModel(newMorel);
+        }
         cmsConfigRepository.save(cmsConfig);
         return new CmsConfigResult(CommonCode.SUCCESS, cmsConfig);
     }
-    //
-    // /**
-    //  * 根据id 获取页面
-    //  *
-    //  * @param id 页面参数
-    //  * @return
-    //  */
-    // public CmsPage findById(String id) {
-    //     Optional<CmsPage> optional = cmsPageRepository.findById(id);
-    //     if (optional.isPresent()) {
-    //         CmsPage cmsPage = optional.get();
-    //         return cmsPage;
-    //     }
-    //     return null;
-    // }
-    //
-    // /**
-    //  * 页面修改
-    //  *
-    //  * @param id      页面id
-    //  * @param cmsPage 页面参数
-    //  * @return
-    //  */
-    // public CmsPageResult edit(String id, CmsPage cmsPage) {
-    //     CmsPage one = findById(id);
-    //     if (Objects.nonNull(one)) {
-    //         //更新模板id
-    //         one.setTemplateId(cmsPage.getTemplateId());
-    //         //更新所属站点
-    //         one.setSiteId(cmsPage.getSiteId());
-    //         //更新页面别名
-    //         one.setPageAliase(cmsPage.getPageAliase());
-    //         //更新页面名称
-    //         one.setPageName(cmsPage.getPageName());
-    //         //更新访问路径
-    //         one.setPageWebPath(cmsPage.getPageWebPath());
-    //         //更新物理路径
-    //         one.setPagePhysicalPath(cmsPage.getPagePhysicalPath());
-    //         //更新url路径
-    //         one.setDataUrl(cmsPage.getDataUrl());
-    //         //执行更新
-    //         CmsPage save = cmsPageRepository.save(one);
-    //         if (save != null) {
-    //             //返回成功
-    //             CmsPageResult cmsPageResult = new CmsPageResult(CommonCode.SUCCESS, save);
-    //             return cmsPageResult;
-    //         }
-    //     }
-    //     //返回失败
-    //     return new CmsPageResult(CommonCode.FAIL, null);
-    // }
-    //
-    // /**
-    //  * 删除页面
-    //  *
-    //  * @param id 页面id
-    //  * @return
-    //  */
-    // public ResponseResult del(String id) {
-    //     Optional<CmsPage> optional = cmsPageRepository.findById(id);
-    //     if (optional.isPresent()) {
-    //         cmsPageRepository.deleteById(id);
-    //         return new ResponseResult(CommonCode.SUCCESS);
-    //     }
-    //     return new ResponseResult(CommonCode.FAIL);
-    //
-    // }
+
+    /**
+     * 模板修改
+     *
+     * @param cmsConfig 页面模板
+     * @return CmsConfigResult
+     */
+    public CmsConfigResult edit(CmsConfig cmsConfig) {
+        Optional<CmsConfig> optional = cmsConfigRepository.findById(cmsConfig.getId());
+        if (!optional.isPresent()) {
+            return new CmsConfigResult(CommonCode.FAIL, null);
+        }
+
+        CmsConfig save = cmsConfigRepository.save(cmsConfig);
+        return new CmsConfigResult(CommonCode.SUCCESS, save);
+    }
 
 
+    /**
+     * 删除模板
+     *
+     * @param id 页面id
+     * @return ResponseResult
+     */
+    public ResponseResult del(String id) {
+        Optional<CmsConfig> optional = cmsConfigRepository.findById(id);
+        if (optional.isPresent()) {
+            cmsConfigRepository.deleteById(id);
+            return new ResponseResult(CommonCode.SUCCESS);
+        }
+        return new ResponseResult(CommonCode.FAIL);
 
+    }
+
+    /**
+     * 删除模板详情
+     *
+     * @param id 页面id
+     * @return ResponseResult
+     */
+    public ResponseResult delModel(String id, String key) {
+        Optional<CmsConfig> optional = cmsConfigRepository.findById(id);
+        if (optional.isPresent()) {
+            CmsConfig cmsConfig = optional.get();
+            List<CmsConfigModel> model = cmsConfig.getModel();
+            List<CmsConfigModel> newModel = new ArrayList<>();
+            for (CmsConfigModel i : model) {
+                if (!i.getKey().equals(key)) {
+                    newModel.add(i);
+                }
+            }
+            cmsConfig.setModel(newModel);
+            cmsConfigRepository.save(cmsConfig);
+            return new ResponseResult(CommonCode.SUCCESS);
+        }
+        return new ResponseResult(CommonCode.FAIL);
+
+    }
 
 
 }

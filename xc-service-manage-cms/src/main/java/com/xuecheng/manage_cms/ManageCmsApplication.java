@@ -21,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 public class ManageCmsApplication {
     public static void main(String[] args) {
         SpringApplication.run(ManageCmsApplication.class, args);
+        System.out.println("xc-service-manage-cms模块启动成功.......");
     }
 
     @Bean

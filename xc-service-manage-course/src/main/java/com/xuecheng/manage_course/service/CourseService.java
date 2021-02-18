@@ -2,8 +2,11 @@ package com.xuecheng.manage_course.service;
 
 import com.xuecheng.framework.domain.course.CourseBase;
 import com.xuecheng.framework.domain.course.Teachplan;
+import com.xuecheng.framework.domain.course.request.CourseListRequest;
 import com.xuecheng.framework.exception.ExceptionCast;
 import com.xuecheng.framework.model.response.CommonCode;
+import com.xuecheng.framework.model.response.QueryResponseResult;
+import com.xuecheng.framework.model.response.QueryResult;
 import com.xuecheng.framework.model.response.ResponseResult;
 import com.xuecheng.manage_course.dao.CourseBaseRepository;
 import com.xuecheng.manage_course.dao.TeachplanMapper;
@@ -18,16 +21,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 
 /**
- *
  * @project_name: xc-service-manage-course
- * @description:  课程管理服务层
- * @create_name:  kikock
- * @create_date:  2021/2/2 16:13
- *
+ * @description: 课程管理服务层
+ * @create_name: kikock
+ * @create_date: 2021/2/2 16:13
  **/
 @Service
 public class CourseService {
@@ -102,7 +104,7 @@ public class CourseService {
         String courseid = teachplan.getCourseid();
         //父结点的id
         String parentid = teachplan.getParentid();
-        if(StringUtils.isEmpty(parentid)){
+        if (StringUtils.isEmpty(parentid)) {
             //获取课程的根结点
             parentid = getTeachplanRoot(courseid);
         }
@@ -114,12 +116,12 @@ public class CourseService {
         //创建一个新结点准备添加
         Teachplan teachplanNew = new Teachplan();
         //将teachplan的属性拷贝到teachplanNew中
-        BeanUtils.copyProperties(teachplan,teachplanNew);
+        BeanUtils.copyProperties(teachplan, teachplanNew);
         //要设置必要的属性
         teachplanNew.setParentid(parentid);
-        if(parent_grade.equals("1")){
+        if (parent_grade.equals("1")) {
             teachplanNew.setGrade("2");
-        }else{
+        } else {
             teachplanNew.setGrade("3");
         }
         teachplanNew.setStatus("0");//未发布
@@ -127,16 +129,16 @@ public class CourseService {
         return new ResponseResult(CommonCode.SUCCESS);
     }
 
-    //获取课程的根结点
-    public String getTeachplanRoot(String courseId){
+    //获取课程的根结点 根结点parentId=0
+    public String getTeachplanRoot(String courseId) {
         Optional<CourseBase> optional = courseBaseRepository.findById(courseId);
-        if(!optional.isPresent()){
+        if (!optional.isPresent()) {
             return null;
         }
         CourseBase courseBase = optional.get();
         //调用dao查询teachplan表得到该课程的根结点（一级结点）
         List<Teachplan> teachplanList = teachplanRepository.findByCourseidAndParentid(courseId, "0");
-        if(teachplanList == null || teachplanList.size()<=0){
+        if (teachplanList == null || teachplanList.size() <= 0) {
             //新添加一个课程的根结点
             Teachplan teachplan = new Teachplan();
             teachplan.setCourseid(courseId);
@@ -151,5 +153,15 @@ public class CourseService {
         //返回根结点的id
         return teachplanList.get(0).getId();
 
+    }
+
+    public QueryResponseResult findCourseList(int page, int size, CourseListRequest courseListRequest) {
+        QueryResult queryResult = new QueryResult();
+        QueryResponseResult queryResponseResult = new QueryResponseResult(CommonCode.SUCCESS, queryResult);
+        if (Objects.isNull(courseListRequest)) {
+            courseListRequest = new CourseListRequest();
+        }
+
+        return queryResponseResult;
     }
 }
