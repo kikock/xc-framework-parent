@@ -7,13 +7,13 @@ import com.xuecheng.framework.model.response.ResultCode;
  * Created by mrt on 2018/3/27.
  */
 public class PayQrcodeResult extends ResponseResult {
-    public PayQrcodeResult(ResultCode resultCode) {
-        super(resultCode);
-    }
-
     private String codeUrl;
     private Float money;
     private String orderNumber;
+
+    public PayQrcodeResult(ResultCode resultCode) {
+        super(resultCode);
+    }
 
     @Override
     public String toString() {

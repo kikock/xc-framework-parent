@@ -17,9 +17,18 @@ public enum FileSystemCode implements ResultCode {
     FS_UPLOADFILE_METAERROR(false, 25007, "上传文件的元信息请使用json格式！"),
     FS_UPLOADFILE_USERISNULL(false, 25008, "上传文件用户为空！");
 
+    private static final ImmutableMap<Integer, FileSystemCode> CACHE;
+
+    static {
+        final ImmutableMap.Builder<Integer, FileSystemCode> builder = ImmutableMap.builder();
+        for (FileSystemCode commonCode : values()) {
+            builder.put(commonCode.code(), commonCode);
+        }
+        CACHE = builder.build();
+    }
+
     //操作代码
     boolean success;
-
     //操作代码
     int code;
     //提示信息
@@ -29,16 +38,6 @@ public enum FileSystemCode implements ResultCode {
         this.success = success;
         this.code = code;
         this.message = message;
-    }
-
-    private static final ImmutableMap<Integer, FileSystemCode> CACHE;
-
-    static {
-        final ImmutableMap.Builder<Integer, FileSystemCode> builder = ImmutableMap.builder();
-        for (FileSystemCode commonCode : values()) {
-            builder.put(commonCode.code(), commonCode);
-        }
-        CACHE = builder.build();
     }
 
     @Override

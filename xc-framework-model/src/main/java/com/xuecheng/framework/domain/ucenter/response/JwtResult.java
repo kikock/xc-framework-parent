@@ -8,12 +8,15 @@ import com.xuecheng.framework.model.response.ResultCode;
  */
 
 public class JwtResult extends ResponseResult {
+    private String jwt;
+
     public JwtResult(ResultCode resultCode, String jwt) {
         super(resultCode);
         this.jwt = jwt;
     }
 
-    private String jwt;
+    public JwtResult() {
+    }
 
     public String getJwt() {
         return jwt;
@@ -28,8 +31,5 @@ public class JwtResult extends ResponseResult {
         return "JwtResult{" +
                 "jwt='" + jwt + '\'' +
                 '}';
-    }
-
-    public JwtResult() {
     }
 }

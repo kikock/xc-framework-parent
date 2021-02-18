@@ -11,8 +11,8 @@ plugins {
 //项目引用依赖
 dependencies {
     /* 子模块之间的依赖 */
-    implementation  project(":xc-framework-common") //通用工程
-    implementation  project(":xc-framework-utils") //工具类工程
+    implementation project(":xc-framework-common") //通用工程
+    implementation project(":xc-framework-utils") //工具类工程
     /* mongodb数据库相关依赖 */
     implementation "org.springframework.data:spring-data-commons:${spring_data_commons}"
     implementation "org.springframework.data:spring-data-mongodb:${spring_data_mongodb}"

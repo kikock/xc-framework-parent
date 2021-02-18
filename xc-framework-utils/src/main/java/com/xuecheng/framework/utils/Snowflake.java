@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class Snowflake {
 
     private static Logger log = LoggerFactory.getLogger(Snowflake.class);
-//    private static Logger
+    //    private static Logger
     /*
      * bits allocations for timeStamp, datacenterId, workerId and sequence
      */
@@ -76,7 +76,10 @@ public class Snowflake {
      * max: 2^5-1 range: [0,31]
      */
     private final long workerId;
-
+    /**
+     * track the amount of calling {@link #waitNextMillis(long)} method
+     */
+    private final AtomicLong waitCount = new AtomicLong(0);
     /**
      * the unique and incrementing sequence number scoped in only one
      * period/unit (here is ONE millisecond). its value will be increased by 1
@@ -85,11 +88,40 @@ public class Snowflake {
      * max: 2^12-1 range: [0,4095]
      */
     private long sequence = 0L;
-
     /**
      * the time stamp last snowflake ID generated
      */
     private long lastTimestamp = -1L;
+
+    /**
+     * @param datacenterId data center number the process running on, value range: [0,31]
+     * @param workerId     machine or process number, value range: [0,31]
+     */
+    public Snowflake(long datacenterId, long workerId) {
+        if (datacenterId > maxDatacenterId || datacenterId < 0) {
+            throw new IllegalArgumentException(
+                    String.format("datacenter Id can't be greater than %d or less than 0", maxDatacenterId));
+        }
+        if (workerId > maxWorkerId || workerId < 0) {
+            throw new IllegalArgumentException(
+                    String.format("worker Id can't be greater than %d or less than 0", maxWorkerId));
+        }
+
+        this.datacenterId = datacenterId;
+        this.workerId = workerId;
+    }
+
+    public static void main(String[] args) {
+        Snowflake idWorker = new Snowflake(1, 2);
+        Snowflake idWorker2 = new Snowflake(1, 3);
+        for (int i = 0; i < 10; i++) {
+            long l = idWorker.nextId();
+            long l2 = idWorker2.nextId();
+            System.out.println(l);
+            System.out.println(l2);
+        }
+
+    }
 
     /**
      * generate an unique and incrementing id
@@ -125,40 +157,19 @@ public class Snowflake {
     }
 
     /**
-     * @param datacenterId data center number the process running on, value range: [0,31]
-     * @param workerId     machine or process number, value range: [0,31]
+     * get current time stamp
+     *
+     * @return current time stamp in millisecond
      */
-    public Snowflake(long datacenterId, long workerId) {
-        if (datacenterId > maxDatacenterId || datacenterId < 0) {
-            throw new IllegalArgumentException(
-                    String.format("datacenter Id can't be greater than %d or less than 0", maxDatacenterId));
-        }
-        if (workerId > maxWorkerId || workerId < 0) {
-            throw new IllegalArgumentException(
-                    String.format("worker Id can't be greater than %d or less than 0", maxWorkerId));
-        }
-
-        this.datacenterId = datacenterId;
-        this.workerId = workerId;
-    }
-
-    /**
-     * track the amount of calling {@link #waitNextMillis(long)} method
-     */
-    private final AtomicLong waitCount = new AtomicLong(0);
-
-    /**
-     * @return the amount of calling {@link #waitNextMillis(long)} method
-     */
-    public long getWaitCount() {
-        return waitCount.get();
+    protected long timestampGen() {
+        return System.currentTimeMillis();
     }
 
     /**
      * running loop blocking until next millisecond
      *
+     * @param currTimestamp current time stamp
      * @return current time stamp in millisecond
-     * @param    currTimestamp    current time stamp
      */
     protected long waitNextMillis(long currTimestamp) {
         waitCount.incrementAndGet();
@@ -169,12 +180,10 @@ public class Snowflake {
     }
 
     /**
-     * get current time stamp
-     *
-     * @return current time stamp in millisecond
+     * @return the amount of calling {@link #waitNextMillis(long)} method
      */
-    protected long timestampGen() {
-        return System.currentTimeMillis();
+    public long getWaitCount() {
+        return waitCount.get();
     }
 
     /**
@@ -189,6 +198,19 @@ public class Snowflake {
 
     public long getEpoch() {
         return this.epoch;
+    }
+
+    /**
+     * extract and display time stamp, datacenterId, workerId and sequence
+     * number information from the given id in humanization format
+     *
+     * @param id snowflake id in Long format
+     * @return snowflake id in String format
+     */
+    public String formatId(long id) {
+        long[] arr = parseId(id);
+        String tmf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date(arr[0]));
+        return String.format("%s, #%d, @(%d,%d)", tmf, arr[3], arr[1], arr[2]);
     }
 
     /**
@@ -210,19 +232,6 @@ public class Snowflake {
     }
 
     /**
-     * extract and display time stamp, datacenterId, workerId and sequence
-     * number information from the given id in humanization format
-     *
-     * @param id snowflake id in Long format
-     * @return snowflake id in String format
-     */
-    public String formatId(long id) {
-        long[] arr = parseId(id);
-        String tmf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date(arr[0]));
-        return String.format("%s, #%d, @(%d,%d)", tmf, arr[3], arr[1], arr[2]);
-    }
-
-    /**
      * a diode is a long value whose left and right margin are ZERO, while
      * middle bits are ONE in binary string layout. it looks like a diode in
      * shape.
@@ -235,18 +244,6 @@ public class Snowflake {
         int lb = (int) (64 - offset);
         int rb = (int) (64 - (offset + length));
         return (-1L << lb) ^ (-1L << rb);
-    }
-
-    public static void main(String[] args) {
-        Snowflake idWorker = new Snowflake(1, 2);
-        Snowflake idWorker2 = new Snowflake(1, 3);
-        for (int i = 0; i < 10; i++) {
-            long l = idWorker.nextId();
-            long l2 = idWorker2.nextId();
-            System.out.println(l);
-            System.out.println(l2);
-        }
-
     }
 }
 

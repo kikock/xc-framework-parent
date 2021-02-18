@@ -18,12 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- *
  * @project_name: xc-service-manage-cms
  * @description: cms页面显示层
  * @create_name: kikock
  * @create_date: 2021/2/1 11:09
- *
  */
 @RestController
 @RequestMapping("/cms/page")

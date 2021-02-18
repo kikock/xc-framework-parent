@@ -15,10 +15,19 @@ public enum MediaCode implements ResultCode {
     MERGE_FILE_FAIL(false, 22004, "合并文件失败，文件在系统已存在！"),
     MERGE_FILE_CHECKFAIL(false, 22005, "合并文件校验失败！");
 
+    private static final ImmutableMap<Integer, MediaCode> CACHE;
+
+    static {
+        final ImmutableMap.Builder<Integer, MediaCode> builder = ImmutableMap.builder();
+        for (MediaCode commonCode : values()) {
+            builder.put(commonCode.code(), commonCode);
+        }
+        CACHE = builder.build();
+    }
+
     //操作代码
     @ApiModelProperty(value = "媒资系统操作是否成功", example = "true", required = true)
     boolean success;
-
     //操作代码
     @ApiModelProperty(value = "媒资系统操作代码", example = "22001", required = true)
     int code;
@@ -30,16 +39,6 @@ public enum MediaCode implements ResultCode {
         this.success = success;
         this.code = code;
         this.message = message;
-    }
-
-    private static final ImmutableMap<Integer, MediaCode> CACHE;
-
-    static {
-        final ImmutableMap.Builder<Integer, MediaCode> builder = ImmutableMap.builder();
-        for (MediaCode commonCode : values()) {
-            builder.put(commonCode.code(), commonCode);
-        }
-        CACHE = builder.build();
     }
 
     @Override

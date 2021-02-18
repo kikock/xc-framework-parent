@@ -79,7 +79,7 @@ public class GridFsTest {
     //删除文件
     @Test
     public void testDelFile() throws IOException {
-//根据文件id删除fs.files和fs.chunks中的记录
+        //根据文件id删除fs.files和fs.chunks中的记录
         gridFsTemplate.delete(Query.query(Criteria.where("_id").is("6006793358e4a408843d58681")));
     }
 

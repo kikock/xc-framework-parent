@@ -9,12 +9,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- *
  * @project_name: xc-service-manage-cms-client
  * @description: mongodb配置文件注入spring
  * @create_name: kikock
  * @create_date: 2021/2/1 11:09
- *
  */
 @Configuration
 public class MongoConfig {
@@ -22,7 +20,7 @@ public class MongoConfig {
     String db;
 
     @Bean
-    public GridFSBucket getGridFSBucket(MongoClient mongoClient){
+    public GridFSBucket getGridFSBucket(MongoClient mongoClient) {
         MongoDatabase database = mongoClient.getDatabase(db);
         GridFSBucket bucket = GridFSBuckets.create(database);
         return bucket;

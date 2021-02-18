@@ -10,5 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @create_name: kikock
  * @create_date: 2021/2/2 16:08
  **/
-public interface CourseBaseRepository extends JpaRepository<CourseBase,String> {
+public interface CourseBaseRepository extends JpaRepository<CourseBase, String> {
 }

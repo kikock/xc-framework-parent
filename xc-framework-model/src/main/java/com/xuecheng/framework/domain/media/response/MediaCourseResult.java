@@ -9,13 +9,13 @@ import com.xuecheng.framework.model.response.ResultCode;
  * Created by admin on 2018/3/5.
  */
 public class MediaCourseResult extends ResponseResult {
+    MediaFile mediaVideo;
+    MediaVideoCourse mediaVideoCourse;
+
     public MediaCourseResult(ResultCode resultCode, MediaVideoCourse mediaVideoCourse) {
         super(resultCode);
         this.mediaVideoCourse = mediaVideoCourse;
     }
-
-    MediaFile mediaVideo;
-    MediaVideoCourse mediaVideoCourse;
 
     public MediaCourseResult() {
     }

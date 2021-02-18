@@ -32,6 +32,10 @@ public class Category implements Serializable {
     private Integer orderby;
     private String isleaf;
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     @Override
     public String toString() {
         return "Category{" +
@@ -43,10 +47,6 @@ public class Category implements Serializable {
                 ", orderby=" + orderby +
                 ", isleaf='" + isleaf + '\'' +
                 '}';
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 
     public String getId() {

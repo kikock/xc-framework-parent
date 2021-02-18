@@ -114,6 +114,19 @@ public class SnowflakeIdWorker {
     // ==============================Methods==========================================
 
     /**
+     * 测试
+     */
+    public static void main(String[] args) {
+        //        System.out.println(Long.toBinaryString(5));
+        SnowflakeIdWorker idWorker = new SnowflakeIdWorker(1, 1);
+        for (int i = 0; i < 1000; i++) {
+            long id = idWorker.nextId();
+            System.out.println(Long.toBinaryString(id));
+            System.out.println(id);
+        }
+    }
+
+    /**
      * 获得下一个ID (该方法是线程安全的)
      *
      * @return SnowflakeId
@@ -152,20 +165,6 @@ public class SnowflakeIdWorker {
     }
 
     /**
-     * 阻塞到下一个毫秒，直到获得新的时间戳
-     *
-     * @param lastTimestamp 上次生成ID的时间截
-     * @return 当前时间戳
-     */
-    protected long tilNextMillis(long lastTimestamp) {
-        long timestamp = timeGen();
-        while (timestamp <= lastTimestamp) {
-            timestamp = timeGen();
-        }
-        return timestamp;
-    }
-
-    /**
      * 返回以毫秒为单位的当前时间
      *
      * @return 当前时间(毫秒)
@@ -177,15 +176,16 @@ public class SnowflakeIdWorker {
     //==============================Test=============================================
 
     /**
-     * 测试
+     * 阻塞到下一个毫秒，直到获得新的时间戳
+     *
+     * @param lastTimestamp 上次生成ID的时间截
+     * @return 当前时间戳
      */
-    public static void main(String[] args) {
-//        System.out.println(Long.toBinaryString(5));
-        SnowflakeIdWorker idWorker = new SnowflakeIdWorker(1, 1);
-        for (int i = 0; i < 1000; i++) {
-            long id = idWorker.nextId();
-            System.out.println(Long.toBinaryString(id));
-            System.out.println(id);
+    protected long tilNextMillis(long lastTimestamp) {
+        long timestamp = timeGen();
+        while (timestamp <= lastTimestamp) {
+            timestamp = timeGen();
         }
+        return timestamp;
     }
 }

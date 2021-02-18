@@ -42,6 +42,10 @@ public class CourseOff implements Serializable {
     private Date expires;
     private String teachplan;//课程计划
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     @Override
     public String toString() {
         return "CourseOff{" +
@@ -63,10 +67,6 @@ public class CourseOff implements Serializable {
                 ", expires=" + expires +
                 ", teachplan='" + teachplan + '\'' +
                 '}';
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 
     public String getId() {

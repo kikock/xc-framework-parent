@@ -1,6 +1,5 @@
 package com.xuecheng.manage_cms.service;
 
-import com.alibaba.fastjson.JSON;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSDownloadStream;
 import com.mongodb.client.gridfs.model.GridFSFile;
@@ -52,12 +51,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- *
  * @project_name: xc-framework-parent
  * @description: 页面管理服务层
  * @create_name: kikock
  * @create_date: 2021-01-19 17:31
- *
  **/
 @Service
 public class PageService {
@@ -168,21 +165,6 @@ public class PageService {
     }
 
     /**
-     * 根据id 获取页面
-     *
-     * @param id 页面参数
-     * @return
-     */
-    public CmsPage findById(String id) {
-        Optional<CmsPage> optional = cmsPageRepository.findById(id);
-        if (optional.isPresent()) {
-            CmsPage cmsPage = optional.get();
-            return cmsPage;
-        }
-        return null;
-    }
-
-    /**
      * 页面修改
      *
      * @param id      页面id
@@ -219,6 +201,21 @@ public class PageService {
     }
 
     /**
+     * 根据id 获取页面
+     *
+     * @param id 页面参数
+     * @return
+     */
+    public CmsPage findById(String id) {
+        Optional<CmsPage> optional = cmsPageRepository.findById(id);
+        if (optional.isPresent()) {
+            CmsPage cmsPage = optional.get();
+            return cmsPage;
+        }
+        return null;
+    }
+
+    /**
      * 删除页面
      *
      * @param id 页面id
@@ -234,7 +231,106 @@ public class PageService {
 
     }
 
+    //页面发布
+    public ResponseResult postPage(String pageId) {
+        //执行页面静态化
+        log.info("###开始静态化页面####");
+        String pageHtml = this.getPageHtml(pageId);
+        if (StringUtils.isEmpty(pageHtml)) {
+            ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_HTMLISNULL);
+        }
+        //保存静态化文件
+        CmsPage cmsPage = saveHtml(pageId, pageHtml);
+        //发送消息
+        sendPostPage(pageId);
+        return new ResponseResult(CommonCode.SUCCESS);
+    }
 
+    /**
+     * 页面静态化
+     *
+     * @param pageId 页面id
+     * @return
+     */
+    public String getPageHtml(String pageId) {
+        //获取页面模型数据
+        Map model = this.getModelByPageId(pageId);
+        if (Objects.isNull(model)) {
+            //获取页面模型数据为空
+            ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_DATAISNULL);
+        }
+        //获取页面模板
+        String templateContent = getTemplateByPageId(pageId);
+        if (StringUtils.isEmpty(templateContent)) {
+            //页面模板为空
+            ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_TEMPLATEISNULL);
+        }
+        //执行静态化
+        String html = generateHtml(templateContent, model);
+        log.info("获取模板页面执行静态化,生成字符串页面");
+        if (StringUtils.isEmpty(html)) {
+            ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_HTMLISNULL);
+        }
+        return html;
+    }
+
+    /**
+     * @description: 保存静态化文件
+     * @param: pageId 页面id
+     * @param: content 静态化页面字符串
+     * @return: 保存后页面信息
+     * @create_name: kikock
+     * @create_date: 2021/2/1 15:42
+     **/
+    private CmsPage saveHtml(String pageId, String content) {
+        //查询页面
+        Optional<CmsPage> optional = cmsPageRepository.findById(pageId);
+        if (!optional.isPresent()) {
+            ExceptionCast.cast(CmsCode.CMS_PAGE_NOTEXISTS);
+        }
+        CmsPage cmsPage = optional.get();
+        //存储之前先删除
+        String htmlFileId = cmsPage.getHtmlFileId();
+        log.info("删除CmsPage 原保存的静态页面");
+        if (StringUtils.isNotEmpty(htmlFileId)) {
+            gridFsTemplate.delete(Query.query(Criteria.where("_id").is(htmlFileId)));
+        }
+        //保存html文件到GridFS
+        InputStream inputStream = IOUtils.toInputStream(content);
+        ObjectId objectId = gridFsTemplate.store(inputStream, cmsPage.getPageName());
+        //文件id
+        String fileId = objectId.toString();
+        //将文件id存储到cmspage中
+        log.info("保存页面静态化文件到mongodb数据库,并更新cmspage静态页面id");
+        cmsPage.setHtmlFileId(fileId);
+        cmsPageRepository.save(cmsPage);
+        return cmsPage;
+    }
+
+    /**
+     * @description: 消息发送
+     * @param: pageId 页面id
+     * @return: 保存后页面信息
+     * @create_name: kikock
+     * @create_date: 2021/2/1 15:42
+     **/
+    private CmsPage sendPostPage(String pageId) {
+        //获取页面
+        CmsPage cmsPage = this.findById(pageId);
+        if (cmsPage == null) {
+            ExceptionCast.cast(CmsCode.CMS_PAGE_NOTEXISTS);
+        }
+        //创建消息对象
+        Map<String, String> msg = new HashMap<>();
+        msg.put("pageId", pageId);
+        //消息内容转换json串
+        String jsonMap = JsonUtils.toJson(msg);
+        //获取站点id作为routingKey
+        String siteId = cmsPage.getSiteId();
+        //消息发送 指定交换机,站点和内容
+        this.rabbitTemplate.convertAndSend(RabbitmqConfig.EX_ROUTING_CMS_POSTPAGE, siteId, jsonMap);
+        return cmsPage;
+    }
 
     /**
      * 根据id查询cms数据模型
@@ -262,7 +358,6 @@ public class PageService {
         return body;
     }
 
-
     /**
      * 获取页面的模板内容
      *
@@ -288,7 +383,7 @@ public class PageService {
             //获取模板文件id
             String templateFileId = cmsTemplate.getTemplateFileId();
             //从GridFS中取模板文件内容
-            log.info("获取模板文件,文件id:"+templateFileId);
+            log.info("获取模板文件,文件id:" + templateFileId);
             //根据文件id查询文件
             GridFSFile gridFSFile =
                     gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(templateFileId)));
@@ -308,35 +403,7 @@ public class PageService {
         return null;
     }
 
-    /**
-     * 页面静态化
-     *
-     * @param pageId 页面id
-     * @return
-     */
-    public String getPageHtml(String pageId) {
-//获取页面模型数据
-        Map model = this.getModelByPageId(pageId);
-        if (Objects.isNull(model)) {
-//获取页面模型数据为空
-            ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_DATAISNULL);
-        }
-        //获取页面模板
-        String templateContent = getTemplateByPageId(pageId);
-        if (StringUtils.isEmpty(templateContent)) {
-//页面模板为空
-            ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_TEMPLATEISNULL);
-        }
-        //执行静态化
-        String html = generateHtml(templateContent, model);
-        log.info("获取模板页面执行静态化,生成字符串页面");
-        if (StringUtils.isEmpty(html)) {
-            ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_HTMLISNULL);
-        }
-        return html;
-    }
-
-      //执行页面静态
+    //执行页面静态
     public String generateHtml(String template, Map model) {
         try {
             //生成配置类
@@ -354,84 +421,5 @@ public class PageService {
             e.printStackTrace();
         }
         return null;
-    }
-
-    //页面发布
-    public ResponseResult postPage(String pageId){
-        //执行页面静态化
-        log.info("###开始静态化页面####");
-        String pageHtml = this.getPageHtml(pageId);
-        if(StringUtils.isEmpty(pageHtml)){
-            ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_HTMLISNULL);
-        }
-        //保存静态化文件
-        CmsPage cmsPage = saveHtml(pageId, pageHtml);
-        //发送消息
-        sendPostPage(pageId);
-        return new ResponseResult(CommonCode.SUCCESS);
-    }
-
-
-    /**
-     *
-     * @description: 消息发送
-     *
-     * @param: pageId 页面id
-     * @return: 保存后页面信息
-     * @create_name: kikock
-     * @create_date: 2021/2/1 15:42
-     *
-     **/
-    private CmsPage sendPostPage(String pageId){
-        //获取页面
-        CmsPage cmsPage = this.findById(pageId);
-        if(cmsPage == null){
-            ExceptionCast.cast(CmsCode.CMS_PAGE_NOTEXISTS);
-        }
-        //创建消息对象
-        Map<String,String> msg =new HashMap<>();
-        msg.put("pageId",pageId);
-        //消息内容转换json串
-        String jsonMap = JsonUtils.toJson(msg);
-        //获取站点id作为routingKey
-        String siteId = cmsPage.getSiteId();
-        //消息发送 指定交换机,站点和内容
-        this.rabbitTemplate.convertAndSend(RabbitmqConfig.EX_ROUTING_CMS_POSTPAGE,siteId, jsonMap);
-        return cmsPage;
-    }
-    /**
-     *
-     * @description: 保存静态化文件
-     *
-     * @param: pageId 页面id
-     * @param: content 静态化页面字符串
-     * @return: 保存后页面信息
-     * @create_name: kikock
-     * @create_date: 2021/2/1 15:42
-     *
-     **/
-    private CmsPage saveHtml(String pageId,String content){
-        //查询页面
-        Optional<CmsPage> optional = cmsPageRepository.findById(pageId);
-        if(!optional.isPresent()){
-            ExceptionCast.cast(CmsCode.CMS_PAGE_NOTEXISTS);
-        }
-        CmsPage cmsPage = optional.get();
-        //存储之前先删除
-        String htmlFileId = cmsPage.getHtmlFileId();
-        log.info("删除CmsPage 原保存的静态页面");
-        if(StringUtils.isNotEmpty(htmlFileId)){
-            gridFsTemplate.delete(Query.query(Criteria.where("_id").is(htmlFileId)));
-        }
-        //保存html文件到GridFS
-        InputStream inputStream = IOUtils.toInputStream(content);
-        ObjectId objectId = gridFsTemplate.store(inputStream, cmsPage.getPageName());
-        //文件id
-        String fileId = objectId.toString();
-        //将文件id存储到cmspage中
-        log.info("保存页面静态化文件到mongodb数据库,并更新cmspage静态页面id");
-        cmsPage.setHtmlFileId(fileId);
-        cmsPageRepository.save(cmsPage);
-        return cmsPage;
     }
 }

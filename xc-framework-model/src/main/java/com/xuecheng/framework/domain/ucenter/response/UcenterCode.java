@@ -16,10 +16,19 @@ public enum UcenterCode implements ResultCode {
     UCENTER_CREDENTIAL_ERROR(false, 23005, "账号或密码错误！"),
     UCENTER_LOGIN_ERROR(false, 23006, "登陆过程出现异常请尝试重新操作！");
 
+    private static final ImmutableMap<Integer, UcenterCode> CACHE;
+
+    static {
+        final ImmutableMap.Builder<Integer, UcenterCode> builder = ImmutableMap.builder();
+        for (UcenterCode commonCode : values()) {
+            builder.put(commonCode.code(), commonCode);
+        }
+        CACHE = builder.build();
+    }
+
     //操作代码
     @ApiModelProperty(value = "操作是否成功", example = "true", required = true)
     boolean success;
-
     //操作代码
     @ApiModelProperty(value = "操作代码", example = "22001", required = true)
     int code;
@@ -31,16 +40,6 @@ public enum UcenterCode implements ResultCode {
         this.success = success;
         this.code = code;
         this.message = message;
-    }
-
-    private static final ImmutableMap<Integer, UcenterCode> CACHE;
-
-    static {
-        final ImmutableMap.Builder<Integer, UcenterCode> builder = ImmutableMap.builder();
-        for (UcenterCode commonCode : values()) {
-            builder.put(commonCode.code(), commonCode);
-        }
-        CACHE = builder.build();
     }
 
     @Override

@@ -52,6 +52,7 @@ public class CmsPageTest {
         QueryResponseResult result = cmsPageController.findList(page, size, null);
         System.out.println(JsonUtils.toJson(result));
     }
+
     //页面   添加接口
     @Test
     public void addPageTest() {
@@ -63,16 +64,18 @@ public class CmsPageTest {
             cmsPage.setPageId(null);
             CmsPageResult result = cmsPageController.add(cmsPage);
             System.out.println(JsonUtils.toJson(result));
-        }else {
+        } else {
             System.out.println("未找到数据!");
         }
     }
+
     //页面 按照id查询
     @Test
     public void findByIdTest() {
         CmsPage result = cmsPageController.findById("5ffd696f37ece3463c26e2c4");
         System.out.println(JsonUtils.toJson(result));
     }
+
     //页面 修改接口
     @Test
     public void editPageTest() {
@@ -86,7 +89,7 @@ public class CmsPageTest {
             //修改
             CmsPageResult result = cmsPageController.edit(cmsPage.getPageId(), cmsPage);
             System.out.println(JsonUtils.toJson(result));
-        }else {
+        } else {
             System.out.println("未找到数据!");
         }
     }
@@ -97,6 +100,7 @@ public class CmsPageTest {
         ResponseResult result = cmsPageController.del("600a47bf58e4a448c49dd75a");
         System.out.println(JsonUtils.toJson(result));
     }
+
     // service测试
     // 页面模板类型配置
     @Test
@@ -111,6 +115,7 @@ public class CmsPageTest {
         String templateByPageId = service.getTemplateByPageId("600a6cda58e4a45afc17b370");
         System.out.println(templateByPageId);
     }
+
     //页面静态化
     @Test
     public void getPageHtmlTEst() {
@@ -124,9 +129,6 @@ public class CmsPageTest {
         System.out.println(all);
 
     }
-
-
-
 
 
     //根据页面名称查询

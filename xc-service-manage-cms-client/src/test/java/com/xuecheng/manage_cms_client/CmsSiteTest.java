@@ -39,7 +39,7 @@ public class CmsSiteTest {
         if (optional.isPresent()) {
             CmsPage cmsPage = optional.get();
             System.out.println(cmsPage.toString());
-        }else {
+        } else {
             System.out.println("未找到数据!");
         }
         //查询 站点
@@ -47,7 +47,7 @@ public class CmsSiteTest {
         if (cmsSite.isPresent()) {
             CmsSite cmsSite1 = cmsSite.get();
             System.out.println(cmsSite1.toString());
-        }else {
+        } else {
             System.out.println("未找到数据!");
         }
 

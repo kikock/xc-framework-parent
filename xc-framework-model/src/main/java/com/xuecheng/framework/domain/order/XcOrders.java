@@ -35,6 +35,10 @@ public class XcOrders implements Serializable {
     @Column(name = "details")
     private String details;
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     @Override
     public String toString() {
         return "XcOrders{" +
@@ -111,9 +115,5 @@ public class XcOrders implements Serializable {
 
     public void setDetails(String details) {
         this.details = details;
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 }

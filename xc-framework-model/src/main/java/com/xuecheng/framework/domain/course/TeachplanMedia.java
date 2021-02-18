@@ -35,6 +35,10 @@ public class TeachplanMedia implements Serializable {
     private String mediaUrl;
     private String courseId;
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     @Override
     public String toString() {
         return "TeachplanMedia{" +
@@ -44,10 +48,6 @@ public class TeachplanMedia implements Serializable {
                 ", mediaUrl='" + mediaUrl + '\'' +
                 ", courseId='" + courseId + '\'' +
                 '}';
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 
     public String getTeachplanId() {

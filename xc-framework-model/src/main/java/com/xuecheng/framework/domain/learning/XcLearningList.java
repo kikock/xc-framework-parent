@@ -32,6 +32,10 @@ public class XcLearningList implements Serializable {
     private Date endTime;
     private String status;
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     @Override
     public String toString() {
         return "XcLearningList{" +
@@ -42,10 +46,6 @@ public class XcLearningList implements Serializable {
                 ", endTime=" + endTime +
                 ", status='" + status + '\'' +
                 '}';
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 
     public String getId() {

@@ -10,6 +10,7 @@ import java.util.List;
  * 1、查看视频时长
  * 2、校验两个视频的时长是否相等
  */
+
 /**
  * @project_name: xc-framework-utils
  * @description: 视频文件处理
@@ -24,6 +25,12 @@ public class VideoUtil {
         this.ffmpeg_path = ffmpeg_path;
     }
 
+    public static void main(String[] args) throws IOException {
+        String ffmpeg_path = "D:\\Program Files\\ffmpeg-20180227-fa0c9d6-win64-static\\bin\\ffmpeg.exe";//ffmpeg的安装位置
+        VideoUtil videoUtil = new VideoUtil(ffmpeg_path);
+        String video_time = videoUtil.get_video_time("E:\\ffmpeg_test\\1.avi");
+        System.out.println(video_time);
+    }
 
     //检查视频时间是否一致
     public Boolean check_video_time(String source, String target) {
@@ -128,13 +135,5 @@ public class VideoUtil {
         }
         return outputString.toString();
 
-    }
-
-
-    public static void main(String[] args) throws IOException {
-        String ffmpeg_path = "D:\\Program Files\\ffmpeg-20180227-fa0c9d6-win64-static\\bin\\ffmpeg.exe";//ffmpeg的安装位置
-        VideoUtil videoUtil = new VideoUtil(ffmpeg_path);
-        String video_time = videoUtil.get_video_time("E:\\ffmpeg_test\\1.avi");
-        System.out.println(video_time);
     }
 }

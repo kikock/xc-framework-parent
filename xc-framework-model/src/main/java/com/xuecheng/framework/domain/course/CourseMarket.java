@@ -36,6 +36,10 @@ public class CourseMarket implements Serializable {
     @Column(name = "end_time")
     private Date endTime;
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     @Override
     public String toString() {
         return "CourseMarket{" +
@@ -48,10 +52,6 @@ public class CourseMarket implements Serializable {
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 '}';
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 
     public String getId() {

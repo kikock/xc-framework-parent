@@ -8,12 +8,15 @@ import com.xuecheng.framework.model.response.ResultCode;
  */
 
 public class LoginResult extends ResponseResult {
+    private String token;
+
     public LoginResult(ResultCode resultCode, String token) {
         super(resultCode);
         this.token = token;
     }
 
-    private String token;
+    public LoginResult() {
+    }
 
     public String getToken() {
         return token;
@@ -28,8 +31,5 @@ public class LoginResult extends ResponseResult {
         return "LoginResult{" +
                 "token='" + token + '\'' +
                 '}';
-    }
-
-    public LoginResult() {
     }
 }

@@ -10,12 +10,12 @@ import com.xuecheng.framework.model.response.ResultCode;
  * @create_date: 2021-01-13 16:31
  **/
 public class AddCourseResult extends ResponseResult {
+    private String courseid;
+
     public AddCourseResult(ResultCode resultCode, String courseid) {
         super(resultCode);
         this.courseid = courseid;
     }
-
-    private String courseid;
 
     @Override
     public String toString() {

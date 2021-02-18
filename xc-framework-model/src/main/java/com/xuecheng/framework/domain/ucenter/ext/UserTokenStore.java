@@ -8,6 +8,9 @@ public class UserTokenStore extends AuthToken {
     String utype;//用户类型
     String companyId;//用户所属企业信息
 
+    public UserTokenStore() {
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -39,8 +42,5 @@ public class UserTokenStore extends AuthToken {
                 ", utype='" + utype + '\'' +
                 ", companyId='" + companyId + '\'' +
                 '}';
-    }
-
-    public UserTokenStore() {
     }
 }

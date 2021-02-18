@@ -45,6 +45,10 @@ public class CoursePub implements Serializable {
     @Column(name = "pub_time")
     private String pubTime;//课程发布时间
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     @Override
     public String toString() {
         return "CoursePub{" +
@@ -68,10 +72,6 @@ public class CoursePub implements Serializable {
                 ", teachplan='" + teachplan + '\'' +
                 ", pubTime='" + pubTime + '\'' +
                 '}';
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 
     public String getId() {

@@ -45,6 +45,15 @@ public class HttpClient {
     private String xmlParam;
     private boolean isHttps;
 
+    public HttpClient(String url, Map<String, String> param) {
+        this.url = url;
+        this.param = param;
+    }
+
+    public HttpClient(String url) {
+        this.url = url;
+    }
+
     public boolean isHttps() {
         return isHttps;
     }
@@ -61,15 +70,6 @@ public class HttpClient {
         this.xmlParam = xmlParam;
     }
 
-    public HttpClient(String url, Map<String, String> param) {
-        this.url = url;
-        this.param = param;
-    }
-
-    public HttpClient(String url) {
-        this.url = url;
-    }
-
     public void setParameter(Map<String, String> map) {
         param = map;
     }
@@ -83,29 +83,6 @@ public class HttpClient {
     public void post() throws ClientProtocolException, IOException {
         HttpPost http = new HttpPost(url);
         setEntity(http);
-        execute(http);
-    }
-
-    public void put() throws ClientProtocolException, IOException {
-        HttpPut http = new HttpPut(url);
-        setEntity(http);
-        execute(http);
-    }
-
-    public void get() throws ClientProtocolException, IOException {
-        if (param != null) {
-            StringBuilder url = new StringBuilder(this.url);
-            boolean isFirst = true;
-            for (String key : param.keySet()) {
-                if (isFirst)
-                    url.append("?");
-                else
-                    url.append("&");
-                url.append(key).append("=").append(param.get(key));
-            }
-            this.url = url.toString();
-        }
-        HttpGet http = new HttpGet(url);
         execute(http);
     }
 
@@ -162,6 +139,29 @@ public class HttpClient {
         } finally {
             httpClient.close();
         }
+    }
+
+    public void put() throws ClientProtocolException, IOException {
+        HttpPut http = new HttpPut(url);
+        setEntity(http);
+        execute(http);
+    }
+
+    public void get() throws ClientProtocolException, IOException {
+        if (param != null) {
+            StringBuilder url = new StringBuilder(this.url);
+            boolean isFirst = true;
+            for (String key : param.keySet()) {
+                if (isFirst)
+                    url.append("?");
+                else
+                    url.append("&");
+                url.append(key).append("=").append(param.get(key));
+            }
+            this.url = url.toString();
+        }
+        HttpGet http = new HttpGet(url);
+        execute(http);
     }
 
     public int getStatusCode() {

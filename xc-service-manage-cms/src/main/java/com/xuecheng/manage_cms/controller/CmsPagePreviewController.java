@@ -1,6 +1,5 @@
 package com.xuecheng.manage_cms.controller;
 
-import com.xuecheng.api.cms.CmsPageControllerApi;
 import com.xuecheng.api.cms.CmsPagePreviewControllerApi;
 import com.xuecheng.framework.web.BaseController;
 import com.xuecheng.manage_cms.service.PageService;
@@ -27,11 +26,12 @@ public class CmsPagePreviewController extends BaseController implements CmsPageP
 
     @Autowired
     PageService pageService;
+
     //接收到页面id
-    @RequestMapping(value="/{pageId}",method = RequestMethod.GET)
-    public void preview(@PathVariable("pageId")String pageId){
+    @RequestMapping(value = "/{pageId}", method = RequestMethod.GET)
+    public void preview(@PathVariable("pageId") String pageId) {
         String pageHtml = pageService.getPageHtml(pageId);
-        if(StringUtils.isNotEmpty(pageHtml)){
+        if (StringUtils.isNotEmpty(pageHtml)) {
             try {
                 ServletOutputStream outputStream = response.getOutputStream();
                 outputStream.write(pageHtml.getBytes(StandardCharsets.UTF_8));

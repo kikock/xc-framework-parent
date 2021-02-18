@@ -39,6 +39,10 @@ public class CourseBase implements Serializable {
     @Column(name = "user_id")
     private String userId;
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     @Override
     public String toString() {
         return "CourseBase{" +
@@ -55,10 +59,6 @@ public class CourseBase implements Serializable {
                 ", companyId='" + companyId + '\'' +
                 ", userId='" + userId + '\'' +
                 '}';
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 
     public String getId() {

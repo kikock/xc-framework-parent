@@ -20,10 +20,19 @@ public enum CourseCode implements ResultCode {
     COURSE_MEDIS_URLISNULL(false, 31101, "选择的媒资文件访问地址为空！"),
     COURSE_MEDIS_NAMEISNULL(false, 31102, "选择的媒资文件名称为空！");
 
+    private static final ImmutableMap<Integer, CourseCode> CACHE;
+
+    static {
+        final ImmutableMap.Builder<Integer, CourseCode> builder = ImmutableMap.builder();
+        for (CourseCode commonCode : values()) {
+            builder.put(commonCode.code(), commonCode);
+        }
+        CACHE = builder.build();
+    }
+
     //操作代码
     @ApiModelProperty(value = "操作是否成功", example = "true", required = true)
     boolean success;
-
     //操作代码
     @ApiModelProperty(value = "操作代码", example = "22001", required = true)
     int code;
@@ -35,16 +44,6 @@ public enum CourseCode implements ResultCode {
         this.success = success;
         this.code = code;
         this.message = message;
-    }
-
-    private static final ImmutableMap<Integer, CourseCode> CACHE;
-
-    static {
-        final ImmutableMap.Builder<Integer, CourseCode> builder = ImmutableMap.builder();
-        for (CourseCode commonCode : values()) {
-            builder.put(commonCode.code(), commonCode);
-        }
-        CACHE = builder.build();
     }
 
     @Override

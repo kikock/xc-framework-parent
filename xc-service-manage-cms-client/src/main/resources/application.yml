@@ -25,6 +25,6 @@ logging:
           autoconfigure: error
 xuecheng:
   mq:
-  #cms客户端监控的队列名称（不同的客户端监控的队列不能重复）
+    #cms客户端监控的队列名称（不同的客户端监控的队列不能重复）
     queue: queue_cms_postpage_01  #队列名称
     routingKey: 6017be4fd21800001d007e32 #消息对象名称(此routingKey为门户站点ID(PS:多个门户站点id相同))

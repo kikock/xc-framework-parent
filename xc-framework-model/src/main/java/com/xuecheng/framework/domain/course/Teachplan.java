@@ -23,6 +23,9 @@ import java.util.List;
 @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
 public class Teachplan implements Serializable {
     private static final long serialVersionUID = -916357110051689485L;
+    //子--自连接 一对多
+    @Transient
+    List<Teachplan> children;
     @Id
     @GeneratedValue(generator = "jpa-uuid")
     @Column(length = 32)
@@ -39,16 +42,16 @@ public class Teachplan implements Serializable {
     private String courseid;
     //课程id
     private String status;
-
     private Integer orderby;
     private Double timelength;
     private String trylearn;
     //父--自连接 多对一
     @Transient
     private Teachplan parent;
-    //子--自连接 一对多
-    @Transient
-    List<Teachplan> children;
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
     @Override
     public String toString() {
@@ -83,10 +86,6 @@ public class Teachplan implements Serializable {
 
     public void setChildren(List<Teachplan> children) {
         this.children = children;
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 
     public String getId() {

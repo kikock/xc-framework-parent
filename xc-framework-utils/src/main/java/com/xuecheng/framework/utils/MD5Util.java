@@ -16,53 +16,20 @@ import java.security.NoSuchAlgorithmException;
 public class MD5Util {
 
     /**
-     * The M d5.
-     */
-    static MessageDigest MD5 = null;
-
-    /**
      * The Constant HEX_DIGITS.
      */
     private static final char HEX_DIGITS[] = {'0', '1', '2', '3', '4', '5',
             '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+    /**
+     * The M d5.
+     */
+    static MessageDigest MD5 = null;
 
     static {
         try {
             MD5 = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException ne) {
             ne.printStackTrace();
-        }
-    }
-
-    /**
-     * 获取文件md5值.
-     *
-     * @param file the file
-     * @return md5串
-     * @throws IOException
-     */
-    public static String getFileMD5String(File file) throws IOException {
-        FileInputStream fileInputStream = null;
-        try {
-            fileInputStream = new FileInputStream(file);
-            byte[] buffer = new byte[8192];
-            int length;
-            while ((length = fileInputStream.read(buffer)) != -1) {
-                MD5.update(buffer, 0, length);
-            }
-
-            return new String(encodeHex(MD5.digest()));
-        } catch (FileNotFoundException e) {
-            throw e;
-        } catch (IOException e) {
-            throw e;
-        } finally {
-            try {
-                if (fileInputStream != null)
-                    fileInputStream.close();
-            } catch (IOException e) {
-                throw e;
-            }
         }
     }
 
@@ -118,28 +85,6 @@ public class MD5Util {
     }
 
     /**
-     * 获取md5值.
-     *
-     * @param str the string
-     * @return md5串
-     * @throws IOException
-     */
-    public static String getStringMD5(String str) {
-        StringBuilder sb = new StringBuilder();
-        try {
-            byte[] data = str.getBytes("utf-8");
-            MessageDigest MD5 = MessageDigest.getInstance("MD5");
-            MD5.update(data);
-            data = MD5.digest();
-            for (int i = 0; i < data.length; i++) {
-                sb.append(HEX_DIGITS[(data[i] & 0xf0) >> 4] + "" + HEX_DIGITS[data[i] & 0xf]);
-            }
-        } catch (Exception e) {
-        }
-        return sb.toString();
-    }
-
-    /**
      * The main method.
      *
      * @param args the arguments
@@ -159,5 +104,59 @@ public class MD5Util {
         System.out.println("MD5:" + md5 + "\n time:" + ((endTime - beginTime)) + "ms");
 
         System.out.println(getStringMD5("111111"));
+    }
+
+    /**
+     * 获取文件md5值.
+     *
+     * @param file the file
+     * @return md5串
+     * @throws IOException
+     */
+    public static String getFileMD5String(File file) throws IOException {
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(file);
+            byte[] buffer = new byte[8192];
+            int length;
+            while ((length = fileInputStream.read(buffer)) != -1) {
+                MD5.update(buffer, 0, length);
+            }
+
+            return new String(encodeHex(MD5.digest()));
+        } catch (FileNotFoundException e) {
+            throw e;
+        } catch (IOException e) {
+            throw e;
+        } finally {
+            try {
+                if (fileInputStream != null)
+                    fileInputStream.close();
+            } catch (IOException e) {
+                throw e;
+            }
+        }
+    }
+
+    /**
+     * 获取md5值.
+     *
+     * @param str the string
+     * @return md5串
+     * @throws IOException
+     */
+    public static String getStringMD5(String str) {
+        StringBuilder sb = new StringBuilder();
+        try {
+            byte[] data = str.getBytes("utf-8");
+            MessageDigest MD5 = MessageDigest.getInstance("MD5");
+            MD5.update(data);
+            data = MD5.digest();
+            for (int i = 0; i < data.length; i++) {
+                sb.append(HEX_DIGITS[(data[i] & 0xf0) >> 4] + "" + HEX_DIGITS[data[i] & 0xf]);
+            }
+        } catch (Exception e) {
+        }
+        return sb.toString();
     }
 }

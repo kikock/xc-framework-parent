@@ -12,10 +12,10 @@ plugins {
 
 dependencies {
     /* 子模块之间的依赖 */
-    implementation project(path:  ':xc-service-api') //接口工程
-    implementation project(path:  ':xc-framework-model') //模型工程
-    implementation project(path:  ':xc-framework-utils')  //工具类工程
-    implementation project(path:  ':xc-framework-common') //通用工程
+    implementation project(path: ':xc-service-api') //接口工程
+    implementation project(path: ':xc-framework-model') //模型工程
+    implementation project(path: ':xc-framework-utils')  //工具类工程
+    implementation project(path: ':xc-framework-common') //通用工程
     /* springBoot 相关依赖 */
     implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"

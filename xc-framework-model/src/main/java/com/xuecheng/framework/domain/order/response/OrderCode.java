@@ -17,10 +17,19 @@ public enum OrderCode implements ResultCode {
     Pay_USERERROR(false, 41011, "支付用户与订单用户不一致！"),
     Pay_NOTFOUNDPAY(false, 41012, "支付记录不存在！");
 
+    private static final ImmutableMap<Integer, OrderCode> CACHE;
+
+    static {
+        final ImmutableMap.Builder<Integer, OrderCode> builder = ImmutableMap.builder();
+        for (OrderCode commonCode : values()) {
+            builder.put(commonCode.code(), commonCode);
+        }
+        CACHE = builder.build();
+    }
+
     //操作代码
     @ApiModelProperty(value = "媒资系统操作是否成功", example = "true", required = true)
     boolean success;
-
     //操作代码
     @ApiModelProperty(value = "媒资系统操作代码", example = "22001", required = true)
     int code;
@@ -32,16 +41,6 @@ public enum OrderCode implements ResultCode {
         this.success = success;
         this.code = code;
         this.message = message;
-    }
-
-    private static final ImmutableMap<Integer, OrderCode> CACHE;
-
-    static {
-        final ImmutableMap.Builder<Integer, OrderCode> builder = ImmutableMap.builder();
-        for (OrderCode commonCode : values()) {
-            builder.put(commonCode.code(), commonCode);
-        }
-        CACHE = builder.build();
     }
 
     @Override

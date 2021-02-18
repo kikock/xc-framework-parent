@@ -26,13 +26,14 @@ public class Mp4VideoUtil extends VideoUtil {
         this.mp4folder_path = mp4folder_path;
     }
 
-    //清除已生成的mp4
-    private void clear_mp4(String mp4_path) {
-        //删除原来已经生成的m3u8及ts文件
-        File mp4File = new File(mp4_path);
-        if (mp4File.exists() && mp4File.isFile()) {
-            mp4File.delete();
-        }
+    public static void main(String[] args) throws IOException {
+        String ffmpeg_path = "D:\\Program Files\\ffmpeg-20180227-fa0c9d6-win64-static\\bin\\ffmpeg.exe";//ffmpeg的安装位置
+        String video_path = "E:\\ffmpeg_test\\1.avi";
+        String mp4_name = "809694a6a974c35e3a36f36850837d7c.mp4";
+        String mp4_path = "F:/develop/upload/8/0/809694a6a974c35e3a36f36850837d7c/";
+        Mp4VideoUtil videoUtil = new Mp4VideoUtil(ffmpeg_path, video_path, mp4_name, mp4_path);
+        String s = videoUtil.generateMp4();
+        System.out.println(s);
     }
 
     /**
@@ -50,7 +51,7 @@ public class Mp4VideoUtil extends VideoUtil {
         //commend.add("D:\\Program Files\\ffmpeg-20180227-fa0c9d6-win64-static\\bin\\ffmpeg.exe");
         commend.add(ffmpeg_path);
         commend.add("-i");
-//        commend.add("D:\\BaiduNetdiskDownload\\test1.avi");
+        //        commend.add("D:\\BaiduNetdiskDownload\\test1.avi");
         commend.add(video_path);
         commend.add("-c:v");
         commend.add("libx264");
@@ -88,13 +89,12 @@ public class Mp4VideoUtil extends VideoUtil {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        String ffmpeg_path = "D:\\Program Files\\ffmpeg-20180227-fa0c9d6-win64-static\\bin\\ffmpeg.exe";//ffmpeg的安装位置
-        String video_path = "E:\\ffmpeg_test\\1.avi";
-        String mp4_name = "809694a6a974c35e3a36f36850837d7c.mp4";
-        String mp4_path = "F:/develop/upload/8/0/809694a6a974c35e3a36f36850837d7c/";
-        Mp4VideoUtil videoUtil = new Mp4VideoUtil(ffmpeg_path, video_path, mp4_name, mp4_path);
-        String s = videoUtil.generateMp4();
-        System.out.println(s);
+    //清除已生成的mp4
+    private void clear_mp4(String mp4_path) {
+        //删除原来已经生成的m3u8及ts文件
+        File mp4File = new File(mp4_path);
+        if (mp4File.exists() && mp4File.isFile()) {
+            mp4File.delete();
+        }
     }
 }
