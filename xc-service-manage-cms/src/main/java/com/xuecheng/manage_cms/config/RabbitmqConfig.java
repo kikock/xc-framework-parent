@@ -6,10 +6,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ *
  * @project_name: xc-service-manage-cms
  * @description: Rabbitmq 消息中间件配置  消息发布方只配置交换机exchanges
  * @create_name: kikock
  * @create_date: 2021/2/1 11:09
+ *
  */
 @Configuration
 public class RabbitmqConfig {

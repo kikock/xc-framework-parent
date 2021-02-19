@@ -26,7 +26,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * @project_name: xc-framework-parent
+ * @project_name: xc-service-manage-cms
  * @description: 站点服务
  * @create_name: kikock
  * @create_date: 2021-02-07 14:31

@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 /**
- * @project_name: xc-framework-parent
+ * @project_name: xc-service-manage-cms
  * @description: 站点服务器Dao层
  * @create_name: kikock
  * @create_date: 2021-02-08 10:39

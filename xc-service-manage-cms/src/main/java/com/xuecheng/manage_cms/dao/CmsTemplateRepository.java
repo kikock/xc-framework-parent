@@ -4,7 +4,7 @@ import com.xuecheng.framework.domain.cms.CmsTemplate;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
- * @project_name: xc-framework-parent
+ * @project_name: xc-service-manage-cms
  * @description: 页面模板dao
  * @create_name: kikock
  * @create_date: 2021-01-19 17:31
