@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * @project_name: xc-framework-parent
+ * @project_name: xc-service-api
  * @description: 站点管理接口
  * @create_name: kikock
  * @create_date: 2021-02-07 14:41

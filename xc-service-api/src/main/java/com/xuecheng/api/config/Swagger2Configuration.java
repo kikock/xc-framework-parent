@@ -10,9 +10,17 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-//
+
 @Configuration
 @EnableSwagger2
+/**
+ *
+ * @project_name: xc-service-api
+ * @description: 文档api配置
+ * @create_name: kikock
+ * @create_date: 2021/2/19 10:23
+ *
+ **/
 public class Swagger2Configuration {
     @Bean
     public Docket createRestApi() {

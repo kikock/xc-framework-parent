@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * @project_name: xc-framework-parent
+ * @project_name: xc-service-api
  * @description: cms配置管理接口
  * @create_name: kikock
  * @create_date: 2021-01-19 11:21

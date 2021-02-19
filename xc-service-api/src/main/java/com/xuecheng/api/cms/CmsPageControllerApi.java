@@ -10,6 +10,12 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
+/**
+ * @project_name: xc-service-api
+ * @description: cms页面管理接口
+ * @create_name: kikock
+ * @create_date: 2021-01-19 11:21
+ **/
 @Api(value = "cms页面管理接口", description = "cms页面管理接口，提供页面的增、删、改、查")
 public interface CmsPageControllerApi {
     //页面查询

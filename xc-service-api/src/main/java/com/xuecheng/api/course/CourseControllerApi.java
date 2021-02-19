@@ -10,13 +10,14 @@ import io.swagger.annotations.ApiOperation;
 import java.util.List;
 
 /**
- * @project_name: xc-framework-parent
+ * @project_name: xc-service-api
  * @description: 课程管理接口
  * @create_name: kikock
  * @create_date: 2021-02-02 16:06
  **/
 @Api(value = "课程管理接口", description = "课程管理接口，提供课程的增、删、改、查")
 public interface CourseControllerApi {
+
     @ApiOperation("课程计划查询树形结构")
     public List<Teachplan> findTeachplanList(String courseId);
 
