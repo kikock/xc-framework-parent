@@ -44,7 +44,7 @@ public class CourseController implements CourseControllerApi {
     }
 
     @Override
-    @PostMapping("/coursebase/list/{page}/{size}")
+    @GetMapping("/coursebase/list/{page}/{size}")
     public QueryResponseResult findCourseList(@PathVariable("page") int page, @PathVariable("size") int size,
                                               CourseListRequest courseListRequest) {
         return courseService.findCourseList(page, size, courseListRequest);

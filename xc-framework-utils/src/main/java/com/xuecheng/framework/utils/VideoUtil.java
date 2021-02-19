@@ -32,23 +32,6 @@ public class VideoUtil {
         System.out.println(video_time);
     }
 
-    //检查视频时间是否一致
-    public Boolean check_video_time(String source, String target) {
-        String source_time = get_video_time(source);
-        //取出时分秒
-        source_time = source_time.substring(0, source_time.lastIndexOf("."));
-        String target_time = get_video_time(target);
-        //取出时分秒
-        target_time = target_time.substring(0, target_time.lastIndexOf("."));
-        if (source_time == null || target_time == null) {
-            return false;
-        }
-        if (source_time.equals(target_time)) {
-            return true;
-        }
-        return false;
-    }
-
     //获取视频时间(时：分：秒：毫秒)
     public String get_video_time(String video_path) {
         /*
@@ -135,5 +118,22 @@ public class VideoUtil {
         }
         return outputString.toString();
 
+    }
+
+    //检查视频时间是否一致
+    public Boolean check_video_time(String source, String target) {
+        String source_time = get_video_time(source);
+        //取出时分秒
+        source_time = source_time.substring(0, source_time.lastIndexOf("."));
+        String target_time = get_video_time(target);
+        //取出时分秒
+        target_time = target_time.substring(0, target_time.lastIndexOf("."));
+        if (source_time == null || target_time == null) {
+            return false;
+        }
+        if (source_time.equals(target_time)) {
+            return true;
+        }
+        return false;
     }
 }

@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @project_name: xc-framework-model
@@ -21,6 +23,9 @@ import java.io.Serializable;
 //@GenericGenerator(name = "jpa-uuid", strategy = "uuid")
 public class Category implements Serializable {
     private static final long serialVersionUID = -906357110051689484L;
+    //子--自连接 一对多
+    @Transient
+    List<Category> children;
     @Id
     @GeneratedValue(generator = "jpa-assigned")
     @Column(length = 32)
@@ -31,6 +36,9 @@ public class Category implements Serializable {
     private String isshow;
     private Integer orderby;
     private String isleaf;
+    //父--自连接 多对一
+    @Transient
+    private Category parent;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -103,5 +111,21 @@ public class Category implements Serializable {
 
     public void setIsleaf(String isleaf) {
         this.isleaf = isleaf;
+    }
+
+    public List<Category> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Category> children) {
+        this.children = children;
+    }
+
+    public Category getParent() {
+        return parent;
+    }
+
+    public void setParent(Category parent) {
+        this.parent = parent;
     }
 }

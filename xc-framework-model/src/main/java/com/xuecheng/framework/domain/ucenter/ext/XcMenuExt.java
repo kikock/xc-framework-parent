@@ -1,6 +1,6 @@
 package com.xuecheng.framework.domain.ucenter.ext;
 
-import com.xuecheng.framework.domain.course.ext.CategoryNode;
+import com.xuecheng.framework.domain.course.Category;
 import com.xuecheng.framework.domain.ucenter.XcMenu;
 
 import java.util.List;
@@ -10,14 +10,14 @@ import java.util.List;
  */
 public class XcMenuExt extends XcMenu {
 
-    List<CategoryNode> children;
+    List<Category> children;
 
 
-    public List<CategoryNode> getChildren() {
+    public List<Category> getChildren() {
         return children;
     }
 
-    public void setChildren(List<CategoryNode> children) {
+    public void setChildren(List<Category> children) {
         this.children = children;
     }
 
