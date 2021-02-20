@@ -2,6 +2,7 @@ package com.xuecheng.manage_course.controller;
 
 
 import com.xuecheng.api.course.CourseControllerApi;
+import com.xuecheng.framework.domain.course.CoursePic;
 import com.xuecheng.framework.domain.course.Teachplan;
 import com.xuecheng.framework.domain.course.request.CourseListRequest;
 import com.xuecheng.framework.model.response.QueryResponseResult;
@@ -49,4 +50,17 @@ public class CourseController implements CourseControllerApi {
                                               CourseListRequest courseListRequest) {
         return courseService.findCourseList(page, size, courseListRequest);
     }
+
+    @Override
+    @GetMapping("/coursebase/findByCoursebase/{id}")
+    public QueryResponseResult findByCoursebaseId(@PathVariable("id") String id) {
+        return courseService.findByCoursebaseId(id);
+    }
+
+    @Override
+    @GetMapping("/coursepic/list/{id}")
+    public CoursePic coursepicList(@PathVariable("id") String id) {
+        return courseService.findCoursepicList(id);
+    }
+
 }

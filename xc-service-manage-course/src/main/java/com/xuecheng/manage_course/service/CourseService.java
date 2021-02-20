@@ -1,6 +1,7 @@
 package com.xuecheng.manage_course.service;
 
 import com.xuecheng.framework.domain.course.CourseBase;
+import com.xuecheng.framework.domain.course.CoursePic;
 import com.xuecheng.framework.domain.course.Teachplan;
 import com.xuecheng.framework.domain.course.request.CourseListRequest;
 import com.xuecheng.framework.exception.ExceptionCast;
@@ -9,11 +10,17 @@ import com.xuecheng.framework.model.response.QueryResponseResult;
 import com.xuecheng.framework.model.response.QueryResult;
 import com.xuecheng.framework.model.response.ResponseResult;
 import com.xuecheng.manage_course.dao.CourseBaseRepository;
+import com.xuecheng.manage_course.dao.CourseMapper;
 import com.xuecheng.manage_course.dao.TeachplanMapper;
 import com.xuecheng.manage_course.dao.TeachplanRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +42,9 @@ import java.util.Optional;
 public class CourseService {
     @Autowired
     TeachplanMapper teachplanMapper;
+
+    @Autowired
+    CourseMapper courseMapper;
 
     @Autowired
     TeachplanRepository teachplanRepository;
@@ -161,7 +171,45 @@ public class CourseService {
         if (Objects.isNull(courseListRequest)) {
             courseListRequest = new CourseListRequest();
         }
+        // 增加自定义条件
+        //条件匹配器  模板名称模糊查询
+        ExampleMatcher exampleMatcher = ExampleMatcher.matching()
+                .withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains());
+        //查询条件 设置条件值
+        CourseBase courseBase = new CourseBase();
 
+        // 条件对象实例
+        Example<CourseBase> example = Example.of(courseBase, exampleMatcher);
+        //条件构建完成 开始查询
+        //分页参数
+        if (page <= 0) {
+            page = 1;
+        }
+        page = page - 1;
+        if (size <= 0) {
+            size = 10;
+        }
+        Pageable pageable = PageRequest.of(page, size);
+        Page<CourseBase> courseBasesAll = courseBaseRepository.findAll(example, pageable);
+        queryResult.setList(courseBasesAll.getContent());//数据列表
+        queryResult.setTotal(courseBasesAll.getTotalElements());//数据总记录数
         return queryResponseResult;
+    }
+
+    public QueryResponseResult findByCoursebaseId(String id) {
+        QueryResult queryResult = new QueryResult();
+        Optional<CourseBase> optional = courseBaseRepository.findById(id);
+        if (optional.isPresent()) {
+            CourseBase courseBase = optional.get();
+            queryResult.setData(courseBase);
+            return new QueryResponseResult(CommonCode.SUCCESS, queryResult);
+        }
+        return new QueryResponseResult(CommonCode.FAIL, queryResult);
+    }
+
+    public CoursePic findCoursepicList(String id) {
+
+        CoursePic coursePic = courseMapper.findByCourseId(id);
+        return coursePic;
     }
 }

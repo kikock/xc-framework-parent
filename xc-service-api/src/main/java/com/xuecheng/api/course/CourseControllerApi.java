@@ -1,5 +1,6 @@
 package com.xuecheng.api.course;
 
+import com.xuecheng.framework.domain.course.CoursePic;
 import com.xuecheng.framework.domain.course.Teachplan;
 import com.xuecheng.framework.domain.course.request.CourseListRequest;
 import com.xuecheng.framework.model.response.QueryResponseResult;
@@ -26,4 +27,10 @@ public interface CourseControllerApi {
 
     @ApiOperation("查询我的课程列表")
     public QueryResponseResult findCourseList(int page, int size, CourseListRequest courseListRequest);
+
+    @ApiOperation("查询课程信息")
+    public QueryResponseResult findByCoursebaseId(String id);
+
+    @ApiOperation("查询课程图片")
+    public CoursePic coursepicList(String id);
 }

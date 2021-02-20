@@ -5,4 +5,21 @@
             resultType="com.xuecheng.framework.domain.course.CourseBase">
         select * from course_base where id = #{id}
     </select>
+
+        <resultMap id="CoursePicMap" type="com.xuecheng.framework.domain.course.CoursePic">
+                <!-- 课程id -->
+        <result column="courseid" property="courseid"/>
+                <!-- 图片地址 -->
+        <result column="pic" property="pic"/>
+        </resultMap>
+
+        <!--查询单个-->
+    <select id="findByCourseId" resultMap="CoursePicMap" >
+        select * from course_pic
+        <where>
+            courseid = #{id}
+        </where>
+    </select>
+
+
 </mapper>
