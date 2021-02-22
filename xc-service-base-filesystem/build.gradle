@@ -1,0 +1,23 @@
+//脚本引用模块
+plugins {
+    id "java"
+    id "maven-publish"
+}
+
+
+// 指定编码格式 java编译的时候缺省状态下会因为中文字符而失败
+[compileJava, compileTestJava, javadoc]*.options*.encoding = "UTF-8"
+
+
+dependencies {
+    /* 子模块之间的依赖 */
+    implementation project(path: ':xc-service-api') //接口工程
+    implementation project(path: ':xc-framework-model') //模型工程
+    implementation project(path: ':xc-framework-utils')  //工具类工程
+    implementation project(path: ':xc-framework-common') //通用工程
+    /* springBoot 相关依赖 */
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-data-mongodb:${springBootVersion}"
+    /* http请求工具 */
+    implementation "net.oschina.zcx7878:fastdfs-client-java:1.27.0.0"
+}

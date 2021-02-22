@@ -9,9 +9,10 @@ import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * @author Administrator
- * @version 1.0
- * @create kikock
+ * @project_name: xc-service-manage-cms
+ * @description: cms配置启动项
+ * @create_name: kikock
+ * @create_date: 2021-01-19 11:25
  **/
 @SpringBootApplication
 @EntityScan("com.xuecheng.framework.domain.cms")//扫描实体类

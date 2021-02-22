@@ -3,13 +3,14 @@
 文件结构
 
         xc-framework-parent(xcGradle)                      父工程，提供依赖管理。
-                |---xc-framework-common              通用工程，提供各层封装
-                |---xc-framework-model               模型工程，提供统一的模型类管理
-                |---xc-framework-utils               工具类工程，提供本项目所使用的工具类  
-                |---xc-service-Api                   接口工程，统一管理本项目的服务接口。
-                |---xc-service-cms                  CMS（Content Management System）即内容管理系统
-                |---xc-service-cms-client           内容管理系统客户端(接收消息发布前端页面)
-                |---xc-service-manage-course         课程管理模块
+                ├── xc-framework-common              通用工程，提供各层封装
+                ├── xc-framework-model               模型工程，提供统一的模型类管理
+                ├── xc-framework-utils               工具类工程，提供本项目所使用的工具类  
+                ├── xc-service-Api                   接口工程，统一管理本项目的服务接口。
+                ├── xc-service-cms                  CMS（Content Management System）即内容管理系统
+                ├── xc-service-cms-client           内容管理系统客户端(接收消息发布前端页面)
+                ├── xc-service-manage-course         课程管理模块
+                ├── xc-service-base-filesystem      文件系统服务工程模块
                 ├── build.gradle        -- 全局配置
                 ├── settings.gradle     -- 全局配置
                 ├── help.md             -- 说明文件      
@@ -38,4 +39,11 @@
     管理地址: http://localhost:15672/   
     初始账号和密码：guest/guest
 
-ps 跟着教程走了 后面慢慢完成
+## 去除SpringBoot项目再启动时打印大量得CONDITIONS EVALUATION REPORT的问题
+
+        yml文件： 
+            logging.level.org.springframework.boot.autoconfigure: error
+        properties文件：
+            logging.level.org.springframework.boot.autoconfigure=ERROR
+                
+
