@@ -1,3 +1,4 @@
+
 @[TOC](本地虚拟机环境)
 
 # 本地虚拟机环境说明
@@ -30,7 +31,44 @@
 
 			vim  wget  等其他依赖软件直接下载安装
 
-#### 2. java环境
+#### 2. liunx 常用命令
+
+```bash
+    # 常用命令
+    ##刷新环境变量
+    source /etc/profile
+    ##系统重启
+    reboot
+    
+    #systemctl 常用命令
+    ##开机启动服务列表
+    systemctl list-unit-files --type=service | grep enabled
+    ##重载系统服务
+    systemctl daemon-reload
+    ##设置开机启动
+    systemctl enable  [name]
+    ##启动服务
+    systemctl start [name]
+    ##停止服务
+    systemctl stop [name]
+    ##重启服务
+    systemctl restart [name]
+    ##移除开机启动项的服务
+    systemctl disable [name]
+    
+    #chkconfig 命令
+    ### 在/etc/init.d 目录下
+    ## 开机启动列表
+    chkconfig --list 
+    ## 添加开机启动
+    chkconfig --add [name]
+    ## 删除开机启动
+    chkconfig --del [name]
+    ## 设置开机启动
+    chkconfig [name] on
+```
+
+#### 3. java环境
 
 - 安装(java version "1.8.0_281")
 
@@ -49,7 +87,7 @@
 	
 ```
 
-#### 2. mysql
+#### 4. mysql
 
 - 安装(8.0.21 for Linux on x86_64)
 
@@ -72,7 +110,7 @@
 	
 	参数名称有变化
 
-#### 2. MongoDB4
+#### 5. MongoDB4
 
 - 安装
 
@@ -152,42 +190,81 @@ WantedBy=multi-user.target
 
 ```
 
-ps:[Systemd 入门教程：实战篇](https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html)
+#### 6.RabbitMQ安装
 
-```
+##### 安装依赖环境Erlang
+
+1.首先下载Erlang 下载地址 "http://www.erlang.org/downloads/”
+将下载好的源码上传到Linux服务器上
+
+2.先安装依赖 "yum install ncurses-devel”
+
+3.执行安装命令"./configure --prefix=/usr/local/[安装目录] --without-javac"
+
+4.进行编译，输入命令"make" , 执行安装命令"make install"
+
+5.进入[安装目录]/bin目录下执行“./erl”命令 查看安装状态
+
+##### 安装rabbitMQ
+
+1.首先下载rabbitMQ 将下载好的源码上传到Linux服务器上 后缀名是“XZ” 先安装XZ压缩软件 解压到安装目录
+
+2.安装相关依赖
+
+3.启动rabbitMQ“./rabbitmq-server”
+
+4.设置开机启动 创建服务文件
 
 ```bash
-    # 常用命令
-    ##刷新环境变量
-    source /etc/profile
-    ##系统重启
-    reboot
+#!/bin/bash
+    #chkconfig:2345 61 61
+
+    export PATH=$PATH:/usr/local/src/erlang/bin
+    export PATH=$PATH:/usr/local/src/rabbitmq_server-3.8.12/sbin
     
-    #systemctl 常用命令
-    ##开机启动服务列表
-    systemctl list-unit-files --type=service | grep enabled
-    ##重载系统服务
-    systemctl daemon-reload
-    ##设置开机启动
-    systemctl enable  [name]
-    ##启动服务
-    systemctl start [name]
-    ##停止服务
-    systemctl stop [name]
-    ##重启服务
-    systemctl restart [name]
-    ##移除开机启动项的服务
-    systemctl disable [name]
+    case "$1" in
+    start)
+    echo "Starting RabbitMQ ..."
+    rabbitmq-server  -detached
+    ;;
+    stop)
+    echo "Stopping RabbitMQ ..."
+    rabbitmqctl stop
+    ;;
+    status)
+    echo "Status RabbitMQ ..."
+    rabbitmqctl status
+    ;;
+    restart)
+    echo "Restarting RabbitMQ ..."
+    rabbitmqctl stop
+    rabbitmq-server  restart
+    ;;
     
-    #chkconfig 命令
-    ### 在/etc/init.d 目录下
-    ## 开机启动列表
-    chkconfig --list 
-    ## 添加开机启动
-    chkconfig --add [name]
-    ## 删除开机启动
-    chkconfig --del [name]
-    ## 设置开机启动
-    chkconfig [name] on
+    *)
+    echo "Usage: $prog {start|stop|status|restart}"
+    ;;
+    esac
+    exit 0    
 ```
+
+5.开机启动服务创建(systemctl命令)
+
+```bash
+    
+    [Unit]
+    Description=rabbitmq
+    After=network.target remote-fs.target nss-lookup.target
+    
+    [Service]
+    Type=forking
+    ExecStart=/usr/local/src/rabbitmq_server-3.8.12/sbin/rabbitmq start
+    ExecReload=/usr/local/src/rabbitmq_server-3.8.12/sbin/rabbitmq status
+    ExecStop=/usr/local/src/rabbitmq_server-3.8.12/sbin/rabbitmq stop
+    PrivateTmp=true
+    
+    [Install]
+    WantedBy=multi-user.target
+
+    ```
 
