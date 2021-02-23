@@ -153,3 +153,41 @@ WantedBy=multi-user.target
 ```
 
 ps:[Systemd 入门教程：实战篇](https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html)
+
+```
+
+```bash
+    # 常用命令
+    ##刷新环境变量
+    source /etc/profile
+    ##系统重启
+    reboot
+    
+    #systemctl 常用命令
+    ##开机启动服务列表
+    systemctl list-unit-files --type=service | grep enabled
+    ##重载系统服务
+    systemctl daemon-reload
+    ##设置开机启动
+    systemctl enable  [name]
+    ##启动服务
+    systemctl start [name]
+    ##停止服务
+    systemctl stop [name]
+    ##重启服务
+    systemctl restart [name]
+    ##移除开机启动项的服务
+    systemctl disable [name]
+    
+    #chkconfig 命令
+    ### 在/etc/init.d 目录下
+    ## 开机启动列表
+    chkconfig --list 
+    ## 添加开机启动
+    chkconfig --add [name]
+    ## 删除开机启动
+    chkconfig --del [name]
+    ## 设置开机启动
+    chkconfig [name] on
+```
+
