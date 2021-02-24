@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @create_name: kikock
  * @create_date: 2021-01-13 16:31
  **/
+@SuppressWarnings("AlibabaEnumConstantsMustHaveComment")
 public enum CourseCode implements ResultCode {
     COURSE_DENIED_DELETE(false, 31001, "删除课程失败，只允许删除本机构的课程！"),
     COURSE_PUBLISH_PERVIEWISNULL(false, 31002, "还没有进行课程预览！"),

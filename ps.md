@@ -49,11 +49,12 @@
     
     
     #systemctl 常用命令
+    ##systemctl 开机启动相关命令 命名xxx.service 放入/etc/systemd/system/文件夹 使用
     ##开机启动服务列表
     systemctl list-unit-files --type=service | grep enabled
     ##重载系统服务
     systemctl daemon-reload
-    ##设置开机启动
+    ##设置开机启动的服务
     systemctl enable  [name]
     ##启动服务
     systemctl start [name]

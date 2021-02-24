@@ -18,6 +18,6 @@ dependencies {
     /* springBoot 相关依赖 */
     implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-data-mongodb:${springBootVersion}"
-    /* http请求工具 */
+    /* fastdfs服务器 http请求工具 */
     implementation "net.oschina.zcx7878:fastdfs-client-java:1.27.0.0"
 }

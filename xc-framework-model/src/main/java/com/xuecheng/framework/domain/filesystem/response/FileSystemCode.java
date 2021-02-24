@@ -8,6 +8,7 @@ import com.xuecheng.framework.model.response.ResultCode;
  * Created by admin on 2018/3/5.
  */
 public enum FileSystemCode implements ResultCode {
+    FS_INITFDFSERROR(false, 25009, "初始化文件系统出错"),
     FS_UPLOADFILE_FILEISNULL(false, 25001, "上传文件为空！"),
     FS_UPLOADFILE_BUSINESSISNULL(false, 25002, "业务Id为空！"),
     FS_UPLOADFILE_SERVERFAIL(false, 25003, "上传文件服务器失败！"),

@@ -33,4 +33,10 @@ public interface CourseControllerApi {
 
     @ApiOperation("查询课程图片")
     public CoursePic coursepicList(String id);
+
+    @ApiOperation("添加课程图片")
+    public ResponseResult addCoursePic(String courseId, String pic);
+
+    @ApiOperation("删除课程图片")
+    public ResponseResult deleteCoursePic(String courseId);
 }
