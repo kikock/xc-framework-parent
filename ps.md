@@ -1,4 +1,5 @@
 
+
 @[TOC](本地虚拟机环境)
 
 # 本地虚拟机环境说明
@@ -6,7 +7,6 @@
 ### 虚拟机版本
 
 			VMware® Workstation 16 Pro 16.1.0 build-17198959
-			CentOS-8.1.1911-x86_64
 
 ### 系统版本
 
@@ -29,7 +29,7 @@
 
 #### 1.依赖软件
 
-			vim  wget  等其他依赖软件直接下载安装
+			vim  wget  c++等其他依赖软件直接下载安装
 
 #### 2. liunx 常用命令
 
@@ -39,6 +39,14 @@
     source /etc/profile
     ##系统重启
     reboot
+    #生成 Makefile，为下一步的编译做准备,检测你的安装平台的目标特征的。比如它会检测你是不是有CC或GCC，并不是需要CC或GCC，它是个shell脚本。
+    ./configure 
+    #从Makefile中读取指令，然后编译
+　  make
+    #从Makefile中读取指令，安装到指定的位置
+　  make install
+    
+    
     
     #systemctl 常用命令
     ##开机启动服务列表
@@ -266,5 +274,208 @@ WantedBy=multi-user.target
     [Install]
     WantedBy=multi-user.target
 
-    ```
+```
+
+#### 7.fastDFS安装 ([下载地址](https://github.com/happyfish100/FastDFS))
+
+##### - 基础安装
+
+1、安装基础环境
+
+    yum install -y gcc gcc-c++
+    yum -y install libevent
+
+2、解压libfatscommon函数库
+
+    # 解压
+    tar -zxvf libfastcommon-1.0.43.tar.gz
+
+3、进入libfastcommon文件夹，编译并且安装
+
+    ./make.sh
+    ./make.sh install
+
+4、解压fastdfs主程序文件
+
+    # 解压
+    tar -zxvf fastdfs-6.06.tar.gz
+
+5、进入fastdfs目录，fastdfs主程序编译并且安装
+
+    ./make.sh
+    ./make.sh install 
+
+6、将安装文件夹下的配置文件拷贝到/etc/fdfs目录下
+
+##### - 配置服务(方便管理每个配置一个文件夹)
+
+1.配置tracker服务
+
+	#复制一份配置文件
+	cp tracker.conf.sample tracker.conf
+	############修改配置#################
+	tracker基础地址
+	base_path=/usr/local/fastdfs/tracker
+	配置 http 端口：
+	http.server_port=80
+
+```bash
+# 相关命令
+##启动
+/usr/bin/fdfs_trackerd /etc/fdfs/tracker.conf start
+##重启
+/usr/bin/fdfs_trackerd /etc/fdfs/tracker.conf restart
+##关闭
+/usr/bin/fdfs_trackerd /etc/fdfs/tracker.conf stop
+```
+
+2.配置storage服务(多个服务)
+
+	#复制一份配置文件
+	cp storage.conf.sample storage.conf
+	############修改配置#################
+	# 修改storage的工作空间
+	base_path=/usr/local/fastdfs/storage
+	# 修改storage的存储空间
+	store_path0=/usr/local/fastdfs/storage
+	# 修改tracker服务的地址和端口号，用于心跳
+	tracker_server=192.168.0.11:22122
+
+```bash
+# 相关命令
+##启动
+/usr/bin/fdfs_storaged /etc/fdfs/storage.conf  start
+##重启
+/usr/bin/fdfs_storaged /etc/fdfs/storage.conf  restart
+##关闭
+/usr/bin/fdfs_storaged /etc/fdfs/storage.conf  stop
+```
+
+3.配置client 测试
+
+	#修改配置文件
+	base_path=/usr/local/fastdfs/client 
+	   #tracker的ip根据实际tracker的ip地址配置
+	tracker_server=192.168.0.11:22122
+	tracker_server=192.168.0.12:22122
+
+```bash
+##上传文件
+/usr/bin/fdfs_test 客户端配置文件地址 upload 上传文件
+
+```
+
+#### Nginx 模块 fastdfs-nginx-module配置
+
+- [模块下载](https://github.com/happyfish100/fastdfs-nginx-module/releases)
+- 解压文件 修改/src/config文件，主要是修改路径，把原路径/usr/local/include/修改为/usr/include/ (fastdfs默认安装fastcommon,fastdfs文件到/usr/include/)
+- 将 FastDFS-nginx-module/src 下的 mod_FastDFS.conf 拷贝至/etc/fdfs/下
+
+  		修改文件mod_FastDFS.conf
+  		#存储数据和日志文件的基本路径(store0_path存在base_path只存储日志)
+  		base_path=/usr/local/fastdfs/storage
+  		#tracker 服务地址
+  		tracker_server=192.168.200.128:22122
+  		url_have_group_name = true
+  		#如果store0_path 不存在使用base_path地址
+  		store0_path=/usr/local/fastdfs/storage
+  		ps:目录不存在 注意创建
+- Nginx 生成 Makefile 时增加 --add-module 参数配置解压目录
+
+#### Nginx安装
+
+1、去[官网下载](http://nginx.org/)对应的nginx包，推荐使用稳定版本
+2、上传nginx到linux系统 3、安装依赖环境
+
+```bash
+##c++依赖
+yum install gcc-c++
+##安装PCRE库，用于解析正则表达式
+yum install -y pcre pcre-devel
+##zlib压缩和解压缩依赖
+yum install -y zlib zlib-devel
+SSL 安全的加密的套接字协议层，用于HTTP安全传输，也就是https
+yum install -y openssl openssl-devel
+```
+
+3、解压nginx包并编译
+
+- 解压
+
+```bash
+		tar -zxvf  [name]
+```
+
+- 先创建nginx临时目录，如果不创建，在启动nginx的过程中会报错
+
+```bash
+		mkdir /var/temp/nginx -p
+```
+
+- 生成 Makefile
+
+|参数|说明 | |--|--| | --prefix | 指定nginx安装目录 | | --pid-path|指向nginx的pid| | --lock-path| 锁定安装文件|		
+| --error-log-path| 错误日志|		
+| --http-log-path| http日志|		
+| --with-http_gzip_static_module| 启用gzip模块,在线实时压缩输出数据流 |		
+| --http-client-body-temp-path| 客户端请求临时目录|				
+| --http-proxy-temp-path| http代理临时目录 |		
+| --http-fastcgi-temp-path| fastcgi临时目录|		
+| --http-uwsgi-temp-path| uwsgi临时目录|				
+| --http-scgi-temp-path| scgi临时目录| | --add-module| nginx 增加模块|
+
+```bash
+## 复制注意换行
+		./configure 
+        --prefix=/usr/local/src/nginx
+        --pid-path=/usr/local/src/nginx/pid/nginx.pid
+        --lock-path=/usr/local/src/nginx/lock/nginx.lock
+        --error-log-path=/usr/local/src/nginx/log/error.log
+        --http-log-path=/usr/local/src/nginx/log/http.log
+        --with-http_gzip_static_module
+        --http-client-body-temp-path=/usr/local/src/nginx/temp/client
+        --http-proxy-temp-path=/usr/local/src/nginx/temp/proxy
+        --http-fastcgi-temp-path=/usr/local/src/nginx/temp/fastcgi
+        --http-uwsgi-temp-path=/usr/local/src/nginx/temp/uwsgi
+        --http-scgi-temp-path=/usr/local/src/nginx/temp/scgi
+        --add-module=/usr/local/src/nginx/module/fastdfs-nginx-module-1.22/src
+```
+
+- 从Makefile中读取指令，然后编译
+
+```bash
+		make
+```
+
+- 从Makefile中读取指令，安装到指定的位置
+
+```bash
+		 make install    
+```
+
+- 修改nginx.conf，添加fastdfs虚拟主机
+
+```bash
+	server {
+         listen       8888;
+         server_name  localhost;
+         location /group1/M00 {
+         root /usr/local/fastdfs/storage/data/;
+         ngx_fastdfs_module;
+         }
+     }
+```
+
+- 常用命令
+
+```bash
+#启动
+./nginx
+#停止
+./nginx -s stop
+#重新加载
+./nginx -s reload
+```
+
+
 
