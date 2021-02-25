@@ -39,6 +39,7 @@
     source /etc/profile
     ##系统重启
     reboot
+    
     #生成 Makefile，为下一步的编译做准备,检测你的安装平台的目标特征的。比如它会检测你是不是有CC或GCC，并不是需要CC或GCC，它是个shell脚本。
     ./configure 
     #从Makefile中读取指令，然后编译
@@ -52,8 +53,6 @@
     ##systemctl 开机启动相关命令 命名xxx.service 放入/etc/systemd/system/文件夹 使用
     ##开机启动服务列表
     systemctl list-unit-files --type=service | grep enabled
-    ##重载系统服务
-    systemctl daemon-reload
     ##设置开机启动的服务
     systemctl enable  [name]
     ##启动服务
@@ -64,6 +63,18 @@
     systemctl restart [name]
     ##移除开机启动项的服务
     systemctl disable [name]
+    # 杀死一个服务的所有子进程
+    systemctl kill [name]
+    # 重新加载一个服务的配置文件
+    systemctl reload [name]
+    # 重载所有修改过的配置文件
+    systemctl daemon-reload
+    # 显示某个 Unit 的所有底层参数
+    systemctl show [name]
+    # 显示某个 Unit 的指定属性的值
+    systemctl show -p CPUShares [name]
+    # 设置某个 Unit 的指定属性
+    systemctl set-property [name] CPUShares=500
     
     #chkconfig 命令
     ### 在/etc/init.d 目录下
