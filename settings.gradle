@@ -7,4 +7,5 @@ include 'xc-service-manage-cms'
 include 'xc-service-manage-cms-client'
 include 'xc-service-manage-course'
 include 'xc-service-base-filesystem'
+include 'xc-govern-center'
 
