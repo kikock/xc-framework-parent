@@ -13,7 +13,7 @@ dependencies {
     /* springBoot 相关依赖 */
     implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     /* feign依赖 */
-    implementation "org.springframework.cloud:spring-cloud-starter-openfeign:${springBootVersion}"
+    compile "org.springframework.cloud:spring-cloud-starter-openfeign"
     /* 接口,文档生成工具依赖 */
     implementation "io.springfox:springfox-swagger2:${swagger2_version}"
     /* google核心库依赖 */
