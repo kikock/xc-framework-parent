@@ -39,6 +39,7 @@
     source /etc/profile
     ##系统重启
     reboot
+        ##解压 tar.gz
     
     #生成 Makefile，为下一步的编译做准备,检测你的安装平台的目标特征的。比如它会检测你是不是有CC或GCC，并不是需要CC或GCC，它是个shell脚本。
     ./configure 
